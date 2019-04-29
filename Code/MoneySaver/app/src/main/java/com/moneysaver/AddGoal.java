@@ -20,10 +20,10 @@ public class AddGoal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_goal);
 
-        name = findViewById(R.id.nameExpenseEdit);
-        cost = findViewById(R.id.costExpenseEdit);
-        notes = findViewById(R.id.notesExpenseEdit);
-        createButton = findViewById(R.id.createExpenseButton);
+        name = findViewById(R.id.nameGoalEdit);
+        cost = findViewById(R.id.costGoalEdit);
+        notes = findViewById(R.id.notesGoalEdit);
+        createButton = findViewById(R.id.createGoalButton);
 
         createButton.setEnabled(false);
 

@@ -19,39 +19,39 @@
             android:text="Добавление цели" />
 
         <TextView
-            android:id="@+id/nameExpenseView"
+            android:id="@+id/nameGoalView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Название" />
 
         <EditText
-            android:id="@+id/nameExpenseEdit"
+            android:id="@+id/nameGoalEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName" />
 
         <TextView
-            android:id="@+id/costExpenseView"
+            android:id="@+id/costGoalView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Нужная сумма" />
 
         <EditText
-            android:id="@+id/costExpenseEdit"
+            android:id="@+id/costGoalEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="numberDecimal" />
 
         <TextView
-            android:id="@+id/notesExpenseView"
+            android:id="@+id/notesGoalView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Заметки" />
 
         <EditText
-            android:id="@+id/notesExpenseEdit"
+            android:id="@+id/notesGoalEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -61,7 +61,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/createExpenseButton"
+        android:id="@+id/createGoalButton"
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
