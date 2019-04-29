@@ -28,6 +28,27 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:weightSum="1.0">
+
+        <fragment
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            class="com.moneysaver.MainFragment"
+            android:id="@+id/mainfragment"
+            android:layout_weight="0.5"/>
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            class="com.moneysaver.DetailsFragment"
+            android:id="@+id/detailsfragment"
+            android:layout_weight="0.5"/>
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
