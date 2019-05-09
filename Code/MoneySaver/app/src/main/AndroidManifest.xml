@@ -19,6 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".AddGoal" />
+        <activity android:name=".AddExpense" />
     </application>
 
 </manifest>
