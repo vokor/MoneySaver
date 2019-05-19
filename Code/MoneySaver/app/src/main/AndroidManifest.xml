@@ -23,6 +23,8 @@
         <activity android:name=".AddExpense" />
         <activity android:name=".ListExpense" />
         <activity android:name=".ExpenseView" />
+        <activity android:name=".ListGoal" />
+        <activity android:name=".GoalView" />
     </application>
 
 </manifest>

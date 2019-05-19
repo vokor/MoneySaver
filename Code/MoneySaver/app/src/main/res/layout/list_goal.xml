@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <ListView
-        android:id="@+id/ExpenselistView"
+        android:id="@+id/goallist_view"
         android:layout_width="match_parent"
         android:layout_height="668dp"
         android:layout_weight="1" />
@@ -17,5 +17,5 @@
         android:layout_width="match_parent"
         android:layout_height="67dp"
         android:layout_weight="0"
-        android:text="Добавить расход" />
+        android:text="Добавить цель" />
 </LinearLayout>

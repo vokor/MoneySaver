@@ -9,39 +9,38 @@ import android.widget.Button;
 import android.widget.ListView;
 import java.util.ArrayList;
 
-public class ListExpense extends AppCompatActivity {
+public class ListGoal extends AppCompatActivity {
     ListView vListView;
-    ArrayList<Expense> list;
+    ArrayList<Goal> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_expense);
-        vListView = findViewById(R.id.ExpenselistView);
+        setContentView(R.layout.list_goal);
+        vListView = findViewById(R.id.goallist_view);
         showListView(list);
 
         Button button_add = findViewById(R.id.button_add);
 
-
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(ListExpense.this, AddExpense.class);
+                Intent i = new Intent(ListGoal.this, AddGoal.class);
                 startActivityForResult(i, 2);
             }
         };
         button_add.setOnClickListener(listener);
     }
 
-    private void showListView(ArrayList<Expense> list){
-        final AdapterExpense a = new AdapterExpense(list);
+    private void showListView(ArrayList<Goal> list){
+        final AdapterGoal a = new AdapterGoal(list);
         vListView.setAdapter(a);
         vListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-                Expense item = (Expense)a.getItem(position);
-                Intent intent = new Intent(view.getContext(), Expense.class);
-                intent.putExtra(Expense.class.getSimpleName(), item);
+                Goal item = (Goal)a.getItem(position);
+                Intent intent = new Intent(view.getContext(), Goal.class);
+                intent.putExtra(Goal.class.getSimpleName(), item);
                 startActivity(intent);
             }
         });

@@ -8,10 +8,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class Adapter extends BaseAdapter {
+public class AdapterExpense extends BaseAdapter {
     private ArrayList<Expense> list;
 
-    public Adapter(ArrayList<Expense> list){
+    public AdapterExpense(ArrayList<Expense> list){
         this.list = list;
     }
 
@@ -33,7 +33,7 @@ public class Adapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.list_item, parent, false);
+        View view = inflater.inflate(R.layout.list_item_expense, parent, false);
         TextView vName = view.findViewById(R.id.item_name);
         TextView vCost = view.findViewById(R.id.item_cost);
         Expense item = (Expense)getItem(position);
