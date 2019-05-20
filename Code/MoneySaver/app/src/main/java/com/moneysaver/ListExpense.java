@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class ListExpense extends AppCompatActivity {
     ListView vListView;
     ArrayList<Expense> list;
+    Expense choosenExpense;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +41,41 @@ public class ListExpense extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 Expense item = (Expense)a.getItem(position);
+                choosenExpense = item;
                 Intent intent = new Intent(view.getContext(), Expense.class);
                 intent.putExtra(Expense.class.getSimpleName(), item);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case 1: {
+                    String b = data.getStringExtra("button");
+                    switch (b) {
+                        case "ok":
+                            break;
+                        case "edit": {
+                            Intent intent = new Intent(ListExpense.this, EditExpense.class);
+                            intent.putExtra(Expense.class.getSimpleName(), choosenExpense);
+                            startActivityForResult(intent, 3);
+                            break;
+                        }
+                        case "delete": {
+                            //Intent intent = new Intent(SecondActivity.this, DeleteGoal.class);
+                            //intent.putExtra(Goal.class.getSimpleName(), choosenGoal);
+                            //startActivityForResult(intent, 4);
+                            break;
+                        }
+                    }
+                }
+                case 2: {
+                    // создать цель
+                }
+            }
+        }
     }
 }

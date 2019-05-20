@@ -25,6 +25,8 @@
         <activity android:name=".ExpenseView" />
         <activity android:name=".ListGoal" />
         <activity android:name=".GoalView" />
+        <activity android:name=".EditGoal" />
+        <activity android:name=".EditExpense" />
     </application>
 
 </manifest>

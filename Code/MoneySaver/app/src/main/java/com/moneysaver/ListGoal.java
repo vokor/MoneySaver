@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class ListGoal extends AppCompatActivity {
     ListView vListView;
     ArrayList<Goal> list;
+    Goal choosenGoal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +40,41 @@ public class ListGoal extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 Goal item = (Goal)a.getItem(position);
+                choosenGoal = item;
                 Intent intent = new Intent(view.getContext(), Goal.class);
                 intent.putExtra(Goal.class.getSimpleName(), item);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case 1: {
+                    String b = data.getStringExtra("button");
+                    switch (b) {
+                        case "ok":
+                            break;
+                        case "edit": {
+                            Intent intent = new Intent(ListGoal.this, EditGoal.class);
+                            intent.putExtra(Goal.class.getSimpleName(), choosenGoal);
+                            startActivityForResult(intent, 3);
+                            break;
+                        }
+                        case "delete": {
+                            //Intent intent = new Intent(SecondActivity.this, DeleteGoal.class);
+                            //intent.putExtra(Goal.class.getSimpleName(), choosenGoal);
+                            //startActivityForResult(intent, 4);
+                            break;
+                        }
+                    }
+                }
+                case 2: {
+                    // создать цель
+                }
+            }
+        }
     }
 }
