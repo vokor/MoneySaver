@@ -64,15 +64,23 @@ public class ListGoal extends AppCompatActivity {
                             break;
                         }
                         case "delete": {
-                            //Intent intent = new Intent(SecondActivity.this, DeleteGoal.class);
-                            //intent.putExtra(Goal.class.getSimpleName(), choosenGoal);
-                            //startActivityForResult(intent, 4);
+                            Intent intent = new Intent(ListGoal.this, DeleteGoal.class);
+                            startActivityForResult(intent, 4);
                             break;
                         }
                     }
                 }
                 case 2: {
                     // создать цель
+                }
+                case 3: {
+                    // edit goal
+                }
+                case 4: {
+                    String b = data.getStringExtra("button");
+                    if(b.equals("delete")){
+                        // delete goal
+                    }
                 }
             }
         }
