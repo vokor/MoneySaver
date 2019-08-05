@@ -1,4 +1,4 @@
-package com.moneysaver;
+package com.moneysaver.CreditPackage;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class EditGoal extends AppCompatActivity {
+import com.moneysaver.CreditPackage.Credit;
+import com.moneysaver.R;
+
+public class EditCredit extends AppCompatActivity {
     EditText name;
     EditText cost;
     EditText notes;
@@ -18,17 +21,17 @@ public class EditGoal extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_goal);
+        setContentView(R.layout.edit_credit);
 
-        name = findViewById(R.id.nameGoalEdit);
-        cost = findViewById(R.id.costGoalEdit);
-        notes = findViewById(R.id.notesGoalEdit);
-        okButton = findViewById(R.id.okGoalButton);
+        name = findViewById(R.id.nameCreditEdit);
+        cost = findViewById(R.id.costCreditEdit);
+        notes = findViewById(R.id.notesCreditEdit);
+        okButton = findViewById(R.id.okCreditButton);
 
-        Goal goal = (Goal) getIntent().getSerializableExtra(Goal.class.getSimpleName());
-        name.setText(goal.getName());
-        cost.setText(String.valueOf(goal.getCost()));
-        notes.setText(goal.getNotes());
+        Credit credit = (Credit) getIntent().getSerializableExtra(Credit.class.getSimpleName());
+        name.setText(credit.getName());
+        cost.setText(String.valueOf(credit.getCost()));
+        notes.setText(credit.getNotes());
 
 
         cost.addTextChangedListener(new TextWatcher() {

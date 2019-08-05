@@ -1,4 +1,4 @@
-package com.moneysaver;
+package com.moneysaver.CreditPackage;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class AddGoal extends AppCompatActivity {
+import com.moneysaver.R;
+
+public class AddCredit extends AppCompatActivity {
     EditText name;
     EditText cost;
     EditText notes;
@@ -18,12 +20,13 @@ public class AddGoal extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_goal);
+        setContentView(R.layout.add_credit);
 
-        name = findViewById(R.id.nameGoalEdit);
-        cost = findViewById(R.id.costGoalEdit);
-        notes = findViewById(R.id.notesGoalEdit);
-        createButton = findViewById(R.id.createGoalButton);
+
+        name = findViewById(R.id.nameCreditEdit);
+        cost = findViewById(R.id.costCreditEdit);
+        notes = findViewById(R.id.notesCreditEdit);
+        createButton = findViewById(R.id.createCreditButton);
 
         createButton.setEnabled(false);
 

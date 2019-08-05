@@ -1,14 +1,14 @@
-package com.moneysaver;
+package com.moneysaver.CreditPackage;
 
 import java.io.Serializable;
 
-public class Goal implements Serializable {
+public class Credit implements Serializable {
     private String name;
     private double cost;
     private double saved;
     private String notes;
 
-    public Goal(String name, double cost, String notes) {
+    public Credit(String name, double cost, String notes) {
         this.name = name;
         this.cost = cost;
         this.saved = 0;

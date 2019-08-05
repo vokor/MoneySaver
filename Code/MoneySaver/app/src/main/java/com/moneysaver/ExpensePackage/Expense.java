@@ -1,4 +1,4 @@
-package com.moneysaver;
+package com.moneysaver.ExpensePackage;
 
 import java.io.Serializable;
 import java.util.Date;

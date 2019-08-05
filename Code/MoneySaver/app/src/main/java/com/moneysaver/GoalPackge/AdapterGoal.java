@@ -1,10 +1,12 @@
-package com.moneysaver;
+package com.moneysaver.GoalPackge;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.moneysaver.R;
 
 import java.util.ArrayList;
 

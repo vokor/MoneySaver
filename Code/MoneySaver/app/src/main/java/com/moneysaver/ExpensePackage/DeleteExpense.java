@@ -1,4 +1,4 @@
-package com.moneysaver;
+package com.moneysaver.ExpensePackage;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,14 +6,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-public class DeleteGoal extends AppCompatActivity {
+import com.moneysaver.R;
+
+public class DeleteExpense extends AppCompatActivity {
     Button deleteButton;
     Button cancelButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.delete_goal);
+        setContentView(R.layout.delete_expense);
 
         deleteButton = findViewById(R.id.deleteButton);
         cancelButton = findViewById(R.id.cancelButton);

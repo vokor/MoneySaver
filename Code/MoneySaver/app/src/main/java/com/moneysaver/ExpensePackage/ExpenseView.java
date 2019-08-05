@@ -1,8 +1,11 @@
-package com.moneysaver;
+package com.moneysaver.ExpensePackage;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
+
+import com.moneysaver.ExpensePackage.Expense;
+import com.moneysaver.R;
 
 public class ExpenseView extends AppCompatActivity {
     @Override

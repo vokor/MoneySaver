@@ -1,4 +1,4 @@
-package com.moneysaver;
+package com.moneysaver.CreditPackage;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,12 +6,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.moneysaver.R;
+
 import java.util.ArrayList;
 
-public class AdapterExpense extends BaseAdapter {
-    private ArrayList<Expense> list;
+public class AdapterCredit extends BaseAdapter {
+    private ArrayList<Credit> list;
 
-    public AdapterExpense(ArrayList<Expense> list){
+    public AdapterCredit(ArrayList<Credit> list){
         this.list = list;
     }
 
@@ -33,14 +35,12 @@ public class AdapterExpense extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.list_item_expense, parent, false);
+        View view = inflater.inflate(R.layout.list_item_credit, parent, false);
         TextView vName = view.findViewById(R.id.item_name);
         TextView vCost = view.findViewById(R.id.item_cost);
-        Expense item = (Expense)getItem(position);
+        Credit item = (Credit) getItem(position);
         vName.setText(item.getName());
-        vCost.setText(Double.toString(item.getCost()));
+        vCost.setText(item.getSaved() + "/" + item.getCost());
         return view;
     }
-
-
 }

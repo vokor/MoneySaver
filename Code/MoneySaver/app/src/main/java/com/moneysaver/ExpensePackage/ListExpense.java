@@ -1,4 +1,4 @@
-package com.moneysaver;
+package com.moneysaver.ExpensePackage;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+
+import com.moneysaver.GoalPackge.DeleteGoal;
+import com.moneysaver.R;
+
 import java.util.ArrayList;
 
 public class ListExpense extends AppCompatActivity {
