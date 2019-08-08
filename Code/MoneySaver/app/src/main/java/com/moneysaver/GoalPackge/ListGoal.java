@@ -71,6 +71,9 @@ public class ListGoal extends AppCompatActivity {
                             startActivityForResult(intent, 4);
                             break;
                         }
+                        case "saveMoney": {
+
+                        }
                     }
                 }
                 case 2: {
@@ -85,7 +88,11 @@ public class ListGoal extends AppCompatActivity {
                         // delete goal
                     }
                 }
+                case 5: {
+                //save money
+                }
+
+                }
             }
         }
-    }
 }
