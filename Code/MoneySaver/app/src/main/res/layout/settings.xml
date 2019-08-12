@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="403dp"
+        android:layout_height="681dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="4dp"
+        tools:layout_editor_absoluteY="-5dp">
+
+        <TextView
+            android:id="@+id/changeBalance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text= "Баланс на месяц" />
+
+        <EditText
+            android:id="@+id/newBalance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number" />
+
+        <TextView
+            android:id="@+id/changeCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text= "Новые категории" />
+
+        <MultiAutoCompleteTextView
+            android:id="@+id/autocomplete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:completionHint="Названия категорий через запятую"
+            android:completionThreshold="1"
+            android:lines="2" />
+
+        <Button
+            android:id="@+id/addCategories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Добавить"
+            />
+
+        <TextView
+            android:id="@+id/myCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text= "Мои категории" />
+
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/scroll"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ListView
+                    android:id="@+id/categoryList"
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/saveChanges"
+                android:layout_width="196dp"
+                android:layout_height="wrap_content"
+                android:text="Сохранить" />
+
+            <Button
+                android:id="@+id/abortChanges"
+                android:layout_width="162dp"
+                android:layout_height="wrap_content"
+                android:text="Отмена" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>
