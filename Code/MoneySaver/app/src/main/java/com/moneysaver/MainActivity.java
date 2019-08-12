@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        TextView textView = findViewById(1000);
+        TextView textView = findViewById(R.id.balance);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
         //sqLite.setBalance(10000000);
         //textView.setText("Баланс: ".concat(Integer.toString(sqLite.getBalance())));

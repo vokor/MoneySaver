@@ -34,21 +34,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:baselineAligned="false"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:weightSum="1.0">
 
-        <fragment
-            android:layout_height="match_parent"
+        <TextView
+            android:id="@+id/balance"
             android:layout_width="match_parent"
-            class="com.moneysaver.MainFragment"
-            android:id="@+id/mainfragment"
-            android:layout_weight="0.5"/>
-        <fragment
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            class="com.moneysaver.DetailsFragment"
-            android:id="@+id/detailsfragment"
-            android:layout_weight="0.5"/>
-    </LinearLayout>
+            android:layout_height="93dp"
+            android:paddingTop="52dp"
+            android:background="#FFD700"
+            android:textColor="#DC143C"
+            android:textStyle="bold">
+            android:weightSum="0.1"</TextView>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:weightSum="0.9">
+
+            <fragment
+                android:id="@+id/mainfragment"
+                class="com.moneysaver.MainFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.45" />
+
+            <fragment
+                android:id="@+id/detailsfragment"
+                class="com.moneysaver.DetailsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.45" />
+        </LinearLayout>
+
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
