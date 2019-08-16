@@ -29,6 +29,13 @@
         <activity android:name=".ExpensePackage.EditExpense" />
         <activity android:name=".GoalPackge.DeleteGoal" />
         <activity android:name=".ExpensePackage.DeleteExpense" />
+        <activity android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".Settings.Settings"
+            android:label="Настройки"
+            />
     </application>
 
 </manifest>

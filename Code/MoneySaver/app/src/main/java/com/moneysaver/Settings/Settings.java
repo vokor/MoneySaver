@@ -12,27 +12,22 @@ import com.moneysaver.R;
 
 import java.util.ArrayList;
 
+import static com.moneysaver.StartScreen.dbName;
+
 public class Settings extends AppCompatActivity {
-    ArrayList<Category> categories;
-    ListView categoryList;
+
+    private ArrayList<Category> categories;
+
+    private ListView categoryList;
+
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
 
-        //dbRepository = new DbRepository(this);
-
-
-        SQLiteDatabase db = getBaseContext().openOrCreateDatabase("app.db", MODE_PRIVATE, null);
-        db.execSQL("CREATE TABLE IF NOT EXISTS Category (Title TEXT,MaxSum INTEGER,Spent INTEGER);");
-
-        db.execSQL("INSERT INTO Category VALUES('Еда', 0, 0);");
-        db.execSQL("INSERT INTO Category VALUES('Транспорт', 0, 0);");
-        db.execSQL("INSERT INTO Category VALUES('Здоровье', 0, 0);");
-        db.execSQL("INSERT INTO Category VALUES('Развлечения', 0, 0);");
-        db.execSQL("INSERT INTO Category VALUES('Платежи', 0, 0);");
-        db.execSQL("INSERT INTO Category VALUES('Другое', 0, 0);");
+        db = getBaseContext().openOrCreateDatabase(dbName, MODE_PRIVATE, null);
 
         categories = getListCategory(db);
 
@@ -48,11 +43,8 @@ public class Settings extends AppCompatActivity {
         autoCompleteTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 
         categoryList = (ListView) findViewById(R.id.categoryList);
-        SettingsAdapter adapter2 = new SettingsAdapter(this, R.layout.list_categories, categories);
-        categoryList.setAdapter(adapter2);
-
-        //EditText editText = (EditText)findViewById(R.id.newBalance);
-        //editText.setHint(sqLite.getBalance());
+        SettingsAdapter categoriesAdapter = new SettingsAdapter(this, R.layout.list_categories, categories);
+        categoryList.setAdapter(categoriesAdapter);
     }
 
 
@@ -62,11 +54,10 @@ public class Settings extends AppCompatActivity {
         if ((cursor != null) && (cursor.getCount() > 0)) {
             cursor.moveToFirst();
             do {
-
-                list.add(new Category(cursor.getString(0),cursor.getInt(1)));
+                list.add(new Category(cursor.getString(1),cursor.getInt(2)));
             } while (cursor.moveToNext());
+            cursor.close();
         }
-        cursor.close();
         return list;
     }
 }
