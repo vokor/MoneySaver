@@ -5,13 +5,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-public class StartScreen extends AppCompatActivity {
+import static com.moneysaver.Config.dbName;
 
-    public static final String dbName = "moneysaver.db";
+public class StartScreen extends AppCompatActivity {
 
     private SQLiteDatabase db;
 
@@ -65,5 +64,10 @@ public class StartScreen extends AppCompatActivity {
             db.execSQL("INSERT INTO Balance (Balance) VALUES(0);");
         cursor.close();
     }
-    //TODO: add method onDestroy()
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        db.close();
+    }
 }

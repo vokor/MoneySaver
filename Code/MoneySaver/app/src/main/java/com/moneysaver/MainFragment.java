@@ -1,5 +1,7 @@
 package com.moneysaver;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -13,24 +15,34 @@ import com.moneysaver.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainFragment extends ListFragment {
-    static List<String> categories = new ArrayList<String>();
+import static android.content.Context.MODE_PRIVATE;
+import static com.moneysaver.Config.dbName;
 
-    static List<String> cost = new ArrayList<String>();
+public class MainFragment extends ListFragment {
+    private List<String> categories = new ArrayList<String>();
+    private List<String> balance = new ArrayList<String>();
+    private List<String> cost = new ArrayList<String>();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        /*if (categories.isEmpty()) {
-            categories.add("Еда");
-            categories.add("Развлечения");
-            categories.add("Долги");
-            cost.add("100");
-            cost.add("200");
-            cost.add("300");
-        }*/
-        // устанавливаем макет
+
+        SQLiteDatabase db;
+        db = getContext().openOrCreateDatabase(dbName, MODE_PRIVATE, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM Category;", null);
+        if ((cursor != null) && (cursor.getCount() > 0)) {
+            cursor.moveToFirst();
+            do {
+                categories.add(cursor.getString(1));
+                cost.add(Integer.toString(cursor.getInt(2)));
+                int value = cursor.getInt(3) - cursor.getInt(2);
+                balance.add(Integer.toString(value));
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+
         View view = inflater.inflate(R.layout.content_main, container, false);
-        // создаем простой ArrayAdapter со стандартным макетом и входными данными
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_1, categories);
         setListAdapter(adapter);
@@ -42,7 +54,7 @@ public class MainFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         // заменяем текст в другом фрагменте по нажатию на элемент списка
         DetailsFragment detailsFragment = (DetailsFragment) getFragmentManager().findFragmentById(R.id.detailsfragment);
-        detailsFragment.change(categories.get(position), cost.get(position));
+        detailsFragment.change(cost.get(position), balance.get(position));
         getListView().setSelector(android.R.color.holo_blue_bright);
     }
 }
