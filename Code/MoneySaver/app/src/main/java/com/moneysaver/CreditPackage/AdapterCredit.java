@@ -40,7 +40,7 @@ public class AdapterCredit extends BaseAdapter {
         TextView vCost = view.findViewById(R.id.item_cost);
         Credit item = (Credit) getItem(position);
         vName.setText(item.getName());
-        vCost.setText(item.getSaved() + "/" + item.getCost());
+        vCost.setText(item.getPayout() + "/" + item.getAllSum());
         return view;
     }
 }

@@ -30,7 +30,7 @@ public class EditCredit extends AppCompatActivity {
 
         Credit credit = (Credit) getIntent().getSerializableExtra(Credit.class.getSimpleName());
         name.setText(credit.getName());
-        cost.setText(String.valueOf(credit.getCost()));
+        cost.setText(String.valueOf(credit.getAllSum()));
         notes.setText(credit.getNotes());
 
 

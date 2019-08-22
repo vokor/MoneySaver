@@ -24,6 +24,11 @@
         <activity android:name=".ExpensePackage.ListExpense" />
         <activity android:name=".ExpensePackage.ExpenseView" />
         <activity android:name=".GoalPackge.ListGoal" />
+        <activity android:name=".CreditPackage.ListCredit" />
+        <activity android:name=".CreditPackage.DeleteCredit" />
+        <activity android:name=".CreditPackage.AddCredit" />
+        <activity android:name=".CreditPackage.CreditView" />
+        <activity android:name=".CreditPackage.EditCredit" />
         <activity android:name=".GoalPackge.GoalView" />
         <activity android:name=".GoalPackge.EditGoal" />
         <activity android:name=".ExpensePackage.EditExpense" />

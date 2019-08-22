@@ -34,7 +34,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
         db = getBaseContext().openOrCreateDatabase(dbName, MODE_PRIVATE, null);
 
-        categories = getListCategory(db);
+        categories = getListCategory();
 
         ArrayList<String> baseCategories = new ArrayList<>();
         for (int i = 0; i < categories.size(); i++)
@@ -59,7 +59,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
     }
 
 
-    public ArrayList<Category> getListCategory(SQLiteDatabase db) {
+    public ArrayList<Category> getListCategory() {
         ArrayList<Category> list = new ArrayList<>();
         Cursor cursor = db.rawQuery("SELECT * FROM Category;", null);
         if ((cursor != null) && (cursor.getCount() > 0)) {

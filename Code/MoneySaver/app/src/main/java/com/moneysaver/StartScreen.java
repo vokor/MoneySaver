@@ -43,6 +43,18 @@ public class StartScreen extends AppCompatActivity {
                 "MaxSum INTEGER NOT NULL," +
                 "Spent INTEGER NOT NULL);");
 
+        db.execSQL("CREATE TABLE IF NOT EXISTS Goal ("+
+                "Name TEXT NOT NULL," +
+                "AllSum DOUBLE NOT NULL," +
+                "Saved DOUBLE NOT NULL," +
+                "Notes TEXT);");
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS Credit ("+
+                "Name TEXT NOT NULL," +
+                "AllSum DOUBLE NOT NULL," +
+                "Payout DOUBLE NOT NULL," +
+                "Notes TEXT);");
+
         db.execSQL("CREATE TABLE IF NOT EXISTS Balance (Balance INTEGER);");
         tryAddBaseInfo();
     }

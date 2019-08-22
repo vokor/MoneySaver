@@ -8,11 +8,18 @@ public class Goal implements Serializable {
     private double saved;
     private String notes;
 
-    public Goal(String name, double cost, String notes) {
+    public Goal(String name, double cost, double saved, String notes) {
         this.name = name;
         this.cost = cost;
         this.saved = 0;
         this.notes = notes;
+    }
+
+    public Goal(String name, double cost, double saved) {
+        this.name = name;
+        this.cost = cost;
+        this.saved = saved;
+        this.notes = "";
     }
 
     public String getName() {

@@ -16,7 +16,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.moneysaver.CreditPackage.ListCredit;
 import com.moneysaver.ExpensePackage.AddExpense;
+import com.moneysaver.ExpensePackage.ListExpense;
+import com.moneysaver.GoalPackge.ListGoal;
 import com.moneysaver.Settings.Settings;
 
 import static com.moneysaver.Config.dbName;
@@ -112,20 +115,22 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        Intent intent = null;
         if (id == R.id.nav_expenses) {
+            intent = new Intent(MainActivity.this, ListExpense.class);
         } else if (id == R.id.nav_goals) {
-
+            intent = new Intent(MainActivity.this, ListGoal.class);
         } else if (id == R.id.nav_credits) {
-
+            intent = new Intent(MainActivity.this, ListCredit.class);
         } else if (id == R.id.nav_manage) {
-            Intent intent = new Intent(MainActivity.this, Settings.class);
-            startActivity(intent);
-
+            intent = new Intent(MainActivity.this, Settings.class);
         } else if (id == R.id.nav_statistics) {
 
         } /*else if (id == R.id.nav_statistics) {
         }*/
+        if (intent == null)
+            return false;
+        startActivity(intent);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
