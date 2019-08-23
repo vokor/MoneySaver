@@ -21,6 +21,7 @@
         </activity>
         <activity android:name=".GoalPackge.AddGoal" />
         <activity android:name=".ExpensePackage.AddExpense" />
+        <activity android:name=".Settings.AddCategories" />
         <activity android:name=".ExpensePackage.ListExpense" />
         <activity android:name=".ExpensePackage.ExpenseView" />
         <activity android:name=".GoalPackge.ListGoal" />
