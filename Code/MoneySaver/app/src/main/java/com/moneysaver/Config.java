@@ -9,6 +9,7 @@ public class Config {
 
     public static String[] baseCategories = {"Еда", "Транспорт","Здоровье","Развлечения", "Платежи", "Другое"};
 
+    public static String rusSymbols = "йцукенгшщзхъфывапролджэячсмитьбюёЙЦУКЕНГШЩЗФЫВАПРОЛДЖЭЪЯЧСМИТЬБЮЁ0123456789";
 
     public static int getBalance(SQLiteDatabase db) {
         int balance;

@@ -8,38 +8,39 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Доступная сумма: "></TextView>
+            android:text="Категория: "></TextView>
 
         <TextView
-            android:id="@+id/balanceForCategories"
-            android:layout_width="157dp"
+            android:id="@+id/newCategoryName"
+            android:layout_width="217dp"
             android:layout_height="wrap_content"></TextView>
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Новые категории">
+        android:text="Максимальная сумма: ">
     </TextView>
 
-    <ListView
-        android:id="@+id/list_new_categories"
-        android:layout_width="match_parent"
-        android:layout_height="668dp"
-        android:layout_weight="1" >
-    </ListView>
+    <EditText
+        android:id="@+id/setCategoryMaxSum"
+        android:layout_width="194dp"
+        android:layout_height="wrap_content"
+        android:maxLength="6"
+        android:lines="1">
+    </EditText>
 
-    <Button
-        android:id="@+id/button_add"
-        android:layout_width="match_parent"
-        android:layout_height="67dp"
-        android:layout_weight="0"
-        android:text="Сохранить" />
+    </LinearLayout>
 </LinearLayout>

@@ -23,6 +23,7 @@ import com.moneysaver.StartScreen;
 import java.util.ArrayList;
 
 import static com.moneysaver.Config.dbName;
+import static com.moneysaver.Config.rusSymbols;
 
 public class Settings extends AppCompatActivity implements View.OnClickListener {
 
@@ -64,9 +65,10 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
         final Button saveChanges = findViewById(R.id.saveChanges);
         final Button abortChanges = findViewById(R.id.abortChanges);
-
+        final Button addCategories = findViewById(R.id.addCategories);
         saveChanges.setOnClickListener(this);
         abortChanges.setOnClickListener(this);
+        addCategories.setOnClickListener(this);
     }
 
 
@@ -87,18 +89,28 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.addCategories:
+                //First of all we try to check all input symbols and string pattern.
                 MultiAutoCompleteTextView autoCompleteTextView = findViewById(R.id.autocomplete);
                 String newCategories = autoCompleteTextView.getText().toString();
-                if (!newCategories.matches("([А-Яа-я_0-9], )*[А-Яа-я_0-9]"))
+                if (!newCategories.matches("([" + rusSymbols + "_]*,( )*)*[" + rusSymbols + "_]*"))
                 {
-                    String errorMessage = "Не удалось распознать введнные категории. Помните, что название может состоять только из букв, цифр и знака _";
-                    errorInCategoriesField(errorMessage);
+                    String errorMessage = "Не удалось распознать введенные категории. Помните, что название может состоять только из русских букв, цифр и знака _. Используйте запятую для разделения";
+                    errorShow(errorMessage);
                     break;
                 }
+                // Try to check that input names are not present in categories
                 String[] splitData = newCategories.replaceAll(" ", "").split(",");
                 if (!checkUniqueNames(splitData))
                     break;
+                int b = getUserBalance();
+                if (b == -2) {
+                    String errMessage = "Поле Баланс должно содержать не отрицательное число";
+                    errorShow(errMessage);
+                    break;
+                }
                 Intent intent = new Intent(Settings.this, AddCategories.class);
+                intent.putExtra("array", splitData);
+                intent.putExtra("balance", getUserBalance());
                 startActivity(intent);
                 break;
             case R.id.saveChanges:
@@ -109,18 +121,40 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         }
     }
 
+    private int getUserBalance(){
+        EditText ed = findViewById(R.id.newBalance);
+        String str = ed.getText().toString();
+        if (str == "")
+            return -1;
+        try{
+            int b = Integer.parseInt(str);
+            if (b < 0)
+                return -2;
+            else
+                return b;
+        }catch(NumberFormatException e){
+            return -2;
+        }
+    }
+
     boolean checkUniqueNames(String[] data) {
         for (int i = 0; i < data.length; i++)
             for (Category category: categories)
                 if (data[i].equals(category.getName())) {
-                    String errorMessage = "Название категории " + category.getName() + " уже занято. Придумайте другое.";
-                    errorInCategoriesField(errorMessage);
+                    String errorMessage = "Название категории '" + category.getName() + "' уже занято. Придумайте другое.";
+                    errorShow(errorMessage);
+                    return false;
+                }
+        for (int i = 0; i < categories.size(); i++)
+            for (int j = 0; j < categories.size(); j++)
+                if (i != j && categories.get(i).getName().equals(categories.get(j).getName())) {
+                    String errorMessage = "Название '" + categories.get(i).getName() + "' можно использовать только один раз";
                     return false;
                 }
         return true;
     }
 
-    private void errorInCategoriesField(String errorMessage) {
+    private void errorShow(String errorMessage) {
         AlertDialog.Builder builder = new AlertDialog.Builder(Settings.this);
         builder.setTitle("Ошибка")
                 .setMessage(errorMessage)

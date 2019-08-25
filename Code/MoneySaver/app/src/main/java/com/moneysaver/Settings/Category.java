@@ -7,9 +7,10 @@ public class Category {
 
     public Category(String name, int maxSum){
         this.name = name;
-        this.spent=0;
+        this.spent= 0;
         this.maxSum = maxSum;
     }
+
     public int getBalance() {
         return this.maxSum - this.spent;
     }

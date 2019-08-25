@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity
 
         TextView textView = findViewById(R.id.balance);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
-        int t = getBalance(db);
         textView.setText("Баланс: ".concat(Integer.toString(getBalance(db))));
     }
 
