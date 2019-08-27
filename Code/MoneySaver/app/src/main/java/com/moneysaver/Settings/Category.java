@@ -4,11 +4,17 @@ public class Category {
     private String name;
     private int maxSum;
     private int spent;
+    public boolean approved;
+    public boolean changed;
+    public boolean deleted;
 
     public Category(String name, int maxSum){
         this.name = name;
         this.spent= 0;
         this.maxSum = maxSum;
+        approved = true;
+        changed = false;
+        deleted = false;
     }
 
     public int getBalance() {

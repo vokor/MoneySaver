@@ -1,5 +1,7 @@
 package com.moneysaver.Settings;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -14,21 +16,17 @@ import com.moneysaver.R;
 import java.util.ArrayList;
 
 public class AdapterCategory extends BaseAdapter {
-    private String[] categoryNames;
     private ArrayList<Category> categories;
     private TextView balanceForCategories;
 
-    public AdapterCategory(String[] categoryNames, TextView balanceForCategories){
-        this.categoryNames = categoryNames;
+    public AdapterCategory(ArrayList<Category> categories, TextView balanceForCategories){
         this.balanceForCategories = balanceForCategories;
-        categories = new ArrayList<>();
-        for (String category: categoryNames)
-            categories.add(new Category(category, 0));
+        this.categories = categories;
     }
 
     @Override
     public int getCount() {
-        return categoryNames.length;
+        return categories.size();
     }
 
     @Override
@@ -54,8 +52,14 @@ public class AdapterCategory extends BaseAdapter {
         EditText newCategoryMaxSum = view.findViewById(R.id.setCategoryMaxSum);
         newCategoryMaxSum.setText(Integer.toString(categories.get(position).getMaxSum()));
 
+        // Set color
+        if (categories.get(position).approved)
+            newCategoryMaxSum.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
+        else
+            newCategoryMaxSum.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+
         //TextWatcher. It is need to check when user change maxSum
-        TextWatcherBalance inputTextWatcher = new TextWatcherBalance(newCategoryMaxSum, balanceForCategories);
+        TextWatcherBalance inputTextWatcher = new TextWatcherBalance(newCategoryMaxSum, balanceForCategories, categories.get(position));
         newCategoryMaxSum.addTextChangedListener(inputTextWatcher);
 
         return view;

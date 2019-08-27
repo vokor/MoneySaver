@@ -1,6 +1,7 @@
 package com.moneysaver.Settings;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -92,10 +93,10 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 //First of all we try to check all input symbols and string pattern.
                 MultiAutoCompleteTextView autoCompleteTextView = findViewById(R.id.autocomplete);
                 String newCategories = autoCompleteTextView.getText().toString();
-                if (!newCategories.matches("([" + rusSymbols + "_]*,( )*)*[" + rusSymbols + "_]*"))
+                if (!newCategories.matches("([" + rusSymbols + "_]*,( )*)*[" + rusSymbols + "_]"))
                 {
                     String errorMessage = "Не удалось распознать введенные категории. Помните, что название может состоять только из русских букв, цифр и знака _. Используйте запятую для разделения";
-                    errorShow(errorMessage);
+                    errorShow(errorMessage, Settings.this);
                     break;
                 }
                 // Try to check that input names are not present in categories
@@ -105,7 +106,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 int b = getUserBalance();
                 if (b == -2) {
                     String errMessage = "Поле Баланс должно содержать не отрицательное число";
-                    errorShow(errMessage);
+                    errorShow(errMessage, Settings.this);
                     break;
                 }
                 Intent intent = new Intent(Settings.this, AddCategories.class);
@@ -116,7 +117,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
             case R.id.saveChanges:
                 dialogWindow();
                 break;
-            case R.id.abortChanges :
+            case R.id.abortChanges:
                 break;
         }
     }
@@ -142,20 +143,21 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
             for (Category category: categories)
                 if (data[i].equals(category.getName())) {
                     String errorMessage = "Название категории '" + category.getName() + "' уже занято. Придумайте другое.";
-                    errorShow(errorMessage);
+                    errorShow(errorMessage, Settings.this);
                     return false;
                 }
-        for (int i = 0; i < categories.size(); i++)
-            for (int j = 0; j < categories.size(); j++)
-                if (i != j && categories.get(i).getName().equals(categories.get(j).getName())) {
-                    String errorMessage = "Название '" + categories.get(i).getName() + "' можно использовать только один раз";
+        for (int i = 0; i < data.length; i++)
+            for (int j = 0; j < data.length; j++)
+                if (i != j && data[i].equals(data[j])) {
+                    String errorMessage = "Название '" + data[i] + "' можно использовать только один раз";
+                    errorShow(errorMessage, Settings.this);
                     return false;
                 }
         return true;
     }
 
-    private void errorShow(String errorMessage) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(Settings.this);
+    public static void errorShow(String errorMessage, Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Ошибка")
                 .setMessage(errorMessage)
                 .setIcon(R.drawable.ic_error_black_24dp)

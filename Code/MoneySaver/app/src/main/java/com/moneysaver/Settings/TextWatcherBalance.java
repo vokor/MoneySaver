@@ -10,60 +10,64 @@ import android.widget.TextView;
 public class TextWatcherBalance implements TextWatcher {
     private EditText editText;
     private TextView balanceForCategories;
-    private int prevBalance;
-    private boolean isPrevApprove;
+    private Category category;
 
-    public TextWatcherBalance(EditText et, TextView balanceForCategories) {
+    public TextWatcherBalance(EditText et, TextView balanceForCategories, Category category) {
         super();
         this.editText = et;
         this.balanceForCategories = balanceForCategories;
-        prevBalance = 0;
-        isPrevApprove = true;
+        this.category = category;
+        this.category.approved = true;
     }
 
     @Override
     public void afterTextChanged(Editable s) {
         String str = editText.getText().toString();
-        int appBalance = Integer.parseInt(balanceForCategories.getText().toString()) + prevBalance;
+        int appBalance;
+        if (category.approved)
+            appBalance = Integer.parseInt(balanceForCategories.getText().toString()) + category.getMaxSum();
+        else
+            appBalance = Integer.parseInt(balanceForCategories.getText().toString());
         balanceForCategories.setText(Integer.toString(appBalance));
         int maxBalance = checkStr(str, appBalance);
-        if (maxBalance == -1) {
+        if (!category.approved) {
             editText.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
             return;
         }
         editText.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
         balanceForCategories.setText(Integer.toString(appBalance - maxBalance));
-        isPrevApprove = true;
     }
 
     private int checkStr(String str, int appBalance) {
         try{
             int number = Integer.parseInt(str);
-            if (number < 0 || number > appBalance) {
-                isPrevApprove = false;
-                return -1;
-            }
+            if (number < 0 || number > appBalance)
+                category.approved = false;
+            else
+                category.approved = true;
+            category.setMaxSum(number);
             return number;
         }catch(NumberFormatException e){
-            return -1;
+            category.approved = false;
+            return 0;
         }
     }
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after){
-        if (!isPrevApprove) {
-            prevBalance = 0;
+        /*if (!category.approved) {
+            category.setMaxSum(0);
             return;
         }
         String str = editText.getText().toString();
         try{
             int number = Integer.parseInt(str);
             if (number < 0)
-                prevBalance = 0;
-            prevBalance = number;
+                category.setMaxSum(0);
+            category.setMaxSum(number);
         }catch(NumberFormatException e){
-            prevBalance = 0;
-        }
+            category.setMaxSum(0);
+        }*/
     }
 
     @Override

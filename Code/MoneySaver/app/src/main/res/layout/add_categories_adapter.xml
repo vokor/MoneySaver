@@ -39,7 +39,8 @@
         android:layout_width="194dp"
         android:layout_height="wrap_content"
         android:maxLength="6"
-        android:lines="1">
+        android:lines="1"
+        android:inputType="number">
     </EditText>
 
     </LinearLayout>
