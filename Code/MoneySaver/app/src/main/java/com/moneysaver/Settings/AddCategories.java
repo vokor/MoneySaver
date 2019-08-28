@@ -51,10 +51,7 @@ public class AddCategories  extends AppCompatActivity implements View.OnClickLis
 
     private void showListView(ListView listView){
         balanceForCategories = findViewById(R.id.balanceForCategories);
-        if (balance < 0)
-            balanceForCategories.setText(Integer.toString(getBalance(db)));
-        else
-            balanceForCategories.setText(Integer.toString(balance));
+        balanceForCategories.setText(Integer.toString(balance));
         adapter = new AdapterCategory(categories, balanceForCategories);
         listView.setAdapter(adapter);
     }
@@ -90,7 +87,8 @@ public class AddCategories  extends AppCompatActivity implements View.OnClickLis
                             public void onClick(DialogInterface dialog, int id) {
                                 Toast.makeText(AddCategories.this, "Сохранено!",
                                         Toast.LENGTH_LONG).show();
-                                addCategoriesToBase();
+                                SaveCategories saved = new SaveCategories(db);
+                                saved.saveCategories(categories);
                                 Intent intent = new Intent(AddCategories.this, Settings.class);
                                 startActivity(intent);
                                 dialog.cancel();
@@ -98,12 +96,5 @@ public class AddCategories  extends AppCompatActivity implements View.OnClickLis
                         });
         AlertDialog alert = builder.create();
         alert.show();
-    }
-
-    private void addCategoriesToBase() {
-        for (Category category: categories) {
-            db.execSQL("INSERT INTO Category (Title, MaxSum, Spent) VALUES('" +
-                        category.getName() + "', " + category.getMaxSum() + ", 0);");
-        }
     }
 }

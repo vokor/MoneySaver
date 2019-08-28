@@ -37,9 +37,9 @@ class SettingsAdapter extends ArrayAdapter<Category> {
         else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        final Category product = categoryList.get(position);
+        final Category category = categoryList.get(position);
 
-        viewHolder.nameView.setText(product.getName());
+        viewHolder.nameView.setText(category.getName());
 
         viewHolder.actionButton1.b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +70,7 @@ class SettingsAdapter extends ArrayAdapter<Category> {
                 else
                 {
                     viewHolder.actionButton2.b.setText("Удалено");
+                    category.deleted = true;
                     viewHolder.actionButton1.b.setEnabled(false);
                     viewHolder.actionButton2.b.setBackgroundColor(Color.parseColor("#FF0000"));;
                     viewHolder.actionButton2.type = true;

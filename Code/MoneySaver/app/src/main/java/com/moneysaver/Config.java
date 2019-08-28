@@ -20,4 +20,9 @@ public class Config {
         cursor.close();
         return balance;
     }
+
+    public static void setBalance(SQLiteDatabase db, int value) {
+        db.execSQL("DELETE FROM Balance;");
+        db.execSQL("INSERT INTO Balance (Balance) VALUES(" + value + ");");
+    }
 }

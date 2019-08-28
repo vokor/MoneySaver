@@ -12,6 +12,22 @@
         tools:layout_editor_absoluteX="4dp"
         tools:layout_editor_absoluteY="-5dp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Баланс на месяц с вычетом существующих категорий: " />
+
+            <TextView
+                android:id="@+id/balanceWithoutCategoties"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
         <TextView
             android:id="@+id/changeBalance"
             android:layout_width="match_parent"
@@ -56,7 +72,7 @@
         <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/scroll"
             android:layout_width="wrap_content"
-            android:layout_height="300dp">
+            android:layout_height="250dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -66,7 +82,7 @@
                 <ListView
                     android:id="@+id/categoryList"
                     android:layout_width="match_parent"
-                    android:layout_height="280dp" />
+                    android:layout_height="250dp" />
             </LinearLayout>
         </ScrollView>
 
