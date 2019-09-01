@@ -11,6 +11,8 @@ public class Config {
 
     public static String rusSymbols = "йцукенгшщзхъфывапролджэячсмитьбюёЙЦУКЕНГШЩЗФЫВАПРОЛДЖЭЪЯЧСМИТЬБЮЁ0123456789";
 
+    private static int actualId = 0;
+
     public static int getBalance(SQLiteDatabase db) {
         int balance;
         Cursor cursor;
@@ -24,5 +26,10 @@ public class Config {
     public static void setBalance(SQLiteDatabase db, int value) {
         db.execSQL("DELETE FROM Balance;");
         db.execSQL("INSERT INTO Balance (Balance) VALUES(" + value + ");");
+    }
+
+    public static int getId() {
+        actualId += 1;
+        return actualId;
     }
 }

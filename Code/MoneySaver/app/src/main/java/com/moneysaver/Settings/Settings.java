@@ -32,25 +32,15 @@ import static com.moneysaver.Config.rusSymbols;
 
 public class Settings extends AppCompatActivity implements View.OnClickListener {
 
-    private ArrayList<Category> categories;
-
     private ListView categoryList;
 
     private SQLiteDatabase db;
 
-    private int sumCategories;
-
-    private TextView textBalanceWithCateg;
-
-    private EditText editNewBalance;
-
-    private boolean isNewBalanceCorrect;
-
-    private int baseBalance;
-
-    private SaveCategories saveCategories;
-
     private MultiAutoCompleteTextView autoCompleteTextView;
+
+    private VariableFields vFields;
+
+    private Container container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,37 +48,27 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         setContentView(R.layout.settings);
 
         db = getBaseContext().openOrCreateDatabase(dbName, MODE_PRIVATE, null);
-        saveCategories = new SaveCategories(db);
-        categories = getListCategory();
         ArrayList<String> baseCategories = new ArrayList<>();
-        for (int j = 0; j < Config.baseCategories.length; j++) {
-            boolean isContains = false;
-            for (int i = 0; i < categories.size(); i++) {
-                if (Config.baseCategories[j].equals(categories.get(i).getName()))
-                    isContains = true;
-            }
-            if (!isContains)
-                baseCategories.add(Config.baseCategories[j]);
-        }
 
         autoCompleteTextView = findViewById(R.id.autocomplete);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, baseCategories);
         autoCompleteTextView.setAdapter(adapter);
 
+        SaveCategories saveCategories = new SaveCategories(db);
         autoCompleteTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         saveCategories.setNamesToEdit(autoCompleteTextView);
         setListenerOnListCategories();
 
-        categoryList = findViewById(R.id.categoryList);
-        SettingsAdapter categoriesAdapter = new SettingsAdapter(this, R.layout.list_categories, categories);
-        categoryList.setAdapter(categoriesAdapter);
+        // This is container with all categories (default, saved, changed, deleted)
+        container = new Container(getListCategory(), saveCategories);
 
-        editNewBalance = findViewById(R.id.newBalance);
-        baseBalance = getBalance(db);
-        setBalanceWithoutCategories();
-        setListenerOnNewBalance();
-        isNewBalanceCorrect = true;
+        vFields = new VariableFields((EditText) findViewById(R.id.newBalance), (TextView) findViewById(R.id.balanceWithoutCategoties), db);
+        vFields.setBalanceWithoutCategories(container.getSum());
+
+        categoryList = findViewById(R.id.categoryList);
+        SettingsAdapter categoriesAdapter = new SettingsAdapter(this, R.layout.list_categories, vFields, container);
+        categoryList.setAdapter(categoriesAdapter);
 
         final Button saveChanges = findViewById(R.id.saveChanges);
         final Button abortChanges = findViewById(R.id.abortChanges);
@@ -109,46 +89,6 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         });
     }
 
-    //Listen when new balance change
-    private void setListenerOnNewBalance() {
-        editNewBalance.setOnKeyListener(new View.OnKeyListener() {
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                int newBalance = getUserBalance();
-                if (newBalance > 0) {
-                    if (newBalance < sumCategories) {
-                        editNewBalance.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
-                        isNewBalanceCorrect = false;
-                    }
-                    else {
-                        textBalanceWithCateg.setText(Integer.toString(newBalance - sumCategories));
-                        editNewBalance.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
-                        isNewBalanceCorrect = true;
-                        return false;
-                    }
-                }
-                else {
-                    editNewBalance.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
-                    isNewBalanceCorrect = false;
-                }
-                textBalanceWithCateg.setText(Integer.toString(baseBalance - sumCategories));
-                return false;
-            }
-        });
-    }
-
-    /*
-    Initialize:
-        1) sumCategories = sum all balances from exists categories
-        2) Set value of balance without categories. Simply difference between baseBalance (balance from DTB) and sumCategories
-     */
-    private void setBalanceWithoutCategories() {
-        for (Category category: categories)
-            sumCategories += category.getMaxSum();
-        textBalanceWithCateg = findViewById(R.id.balanceWithoutCategoties);
-        textBalanceWithCateg.setText(Integer.toString(baseBalance - sumCategories));
-    }
-
     private ArrayList<Category> getListCategory() {
         ArrayList<Category> list = new ArrayList<>();
         Cursor cursor = db.rawQuery("SELECT * FROM Category;", null);
@@ -159,7 +99,6 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
             } while (cursor.moveToNext());
             cursor.close();
         }
-        list.addAll(saveCategories.categories);
         return list;
     }
 
@@ -184,7 +123,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 Intent intent = new Intent(Settings.this, AddCategories.class);
 
                 intent.putExtra("array", splitData);
-                intent.putExtra("balance", getUserBalance() - sumCategories);
+                intent.putExtra("balance", vFields.getUserBalance() - vFields.sumCategories);
                 startActivity(intent);
                 break;
             case R.id.saveChanges:
@@ -197,16 +136,15 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         }
     }
 
-
     //Check balance which user setted.
     private boolean checkNewBalance() {
-        int type = getUserBalance();
+        int type = vFields.getUserBalance();
         if (type == -2) {
             String errMessage = "Поле Баланс должно содержать неотрицательное число!";
             errorShow(errMessage, Settings.this);
             return false;
         }
-        if (!isNewBalanceCorrect) {
+        if (!vFields.isNewBalanceCorrect) {
             String errMessage = "Новый баланс должен быть больше суммы всех имеющихся категорий!";
             errorShow(errMessage, Settings.this);
             return false;
@@ -214,24 +152,9 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         return true;
     }
 
-    private int getUserBalance(){
-        String str = editNewBalance.getText().toString();
-        if (str.equals(""))
-            return getBalance(db);
-        try{
-            int b = Integer.parseInt(str);
-            if (b < 0)
-                return -2;
-            else
-                return b;
-        }catch(NumberFormatException e){
-            return -2;
-        }
-    }
-
     private boolean checkUniqueNames(String[] data) {
         for (int i = 0; i < data.length; i++)
-            for (Category category: categories)
+            for (Category category: container.getCommonCategories())
                 if (data[i].equals(category.getName())) {
                     String errorMessage = "Название категории '" + category.getName() + "' уже занято. Придумайте другое.";
                     errorShow(errorMessage, Settings.this);
@@ -280,8 +203,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 .setNegativeButton("Подтверждаю",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                saveCategories.addCategories();
-                                Config.setBalance(db, getUserBalance());
+                                container.saveEverything();
+                                Config.setBalance(db, vFields.getUserBalance());
                                 Toast.makeText(Settings.this, "Сохранено!",
                                         Toast.LENGTH_LONG).show();
                                 dialog.cancel();
