@@ -18,8 +18,12 @@ public class Container {
 
     private void calculateCommonCategories() {
         commonCategories = new ArrayList<>();
-        commonCategories.addAll(categories);
-        commonCategories.addAll(saveCategories.categories);
+        for (Category category: categories) {
+            commonCategories.add(new Category(category.getName(), category.getMaxSum(), category.getSpent(), category.getId()));
+        }
+        for (Category category: saveCategories.categories) {
+            commonCategories.add(new Category(category.getName(), category.getMaxSum(), category.getSpent(), category.getId()));
+        }
     }
 
     public ArrayList<Category> getCommonCategories() {
@@ -40,7 +44,12 @@ public class Container {
     }
 
     public void saveEverything() {
-        saveCategories.addCategories();
+        saveCategories.addCategories(commonCategories);
+        saveCategories.deleteCategories();
+    }
+
+    public void abortEverithing() {
+        saveCategories.deleteCategories();
     }
 
     private boolean checkUniqueName(int position, String newName) {

@@ -43,7 +43,7 @@ public class AddCategories  extends AppCompatActivity implements View.OnClickLis
         categoryNames = arguments.getStringArray("array");
         categories = new ArrayList<>();
         for (String category: categoryNames)
-            categories.add(new Category(category, 0));
+            categories.add(new Category(category, 0, 0));
         balance = arguments.getInt("balance");
 
         showListView(vListView);

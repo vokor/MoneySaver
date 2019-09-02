@@ -36,7 +36,7 @@ class SettingsAdapter extends ArrayAdapter<Category> {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public synchronized View getView(final int position, View convertView, ViewGroup parent) {
 
         final ViewHolder viewHolder;
         convertView = inflater.inflate(R.layout.list_categories, parent, false);
@@ -46,20 +46,25 @@ class SettingsAdapter extends ArrayAdapter<Category> {
         final Category category = container.getCommonCategories().get(position);
 
         viewHolder.nameView.setText(category.getName());
+        viewHolder.miniMaxSum.setText(Integer.toString(category.getMaxSum()));
 
         viewHolder.change.b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean flag = container.getCommonCategories().get(position).changed;
+                boolean flag = category.changed;
                 if (!flag) {
-                    startDialog(position);
+                    startDialog(position, viewHolder);
                 }
                 else {
                     container.abortChanges(position);
                     container.getCommonCategories().get(position).changed = false;
+
+                    viewHolder.setActualChange();
+                    viewHolder.miniMaxSum.setText(Integer.toString(category.getMaxSum()));
+                    viewHolder.nameView.setText(category.getName());
+                    vFields.setSum(container.getSum());
+                    vFields.recountBalance();
                 }
-                viewHolder.setActualChange();
-                vFields.recountBalance(container.getSum());
             }
         });
 
@@ -68,7 +73,8 @@ class SettingsAdapter extends ArrayAdapter<Category> {
             public void onClick(View v) {
                 container.getCommonCategories().get(position).deleted = !container.getCommonCategories().get(position).deleted;
                 viewHolder.setActualDelete();
-                vFields.recountBalance(container.getSum());
+                vFields.setSum(container.getSum());
+                vFields.recountBalance();
             }
         });
 
@@ -79,6 +85,7 @@ class SettingsAdapter extends ArrayAdapter<Category> {
         private MyButton change;
         private MyButton delete;
         private final TextView nameView;
+        private final TextView miniMaxSum;
         private int position;
 
         ViewHolder(View view, int position){
@@ -89,6 +96,7 @@ class SettingsAdapter extends ArrayAdapter<Category> {
             delete = new MyButton(view, false);
             setActualDelete();
             nameView = view.findViewById(R.id.nameCategory);
+            miniMaxSum = view.findViewById(R.id.miniMaxSum);
         }
 
         public void setActualChange() {
@@ -128,14 +136,15 @@ class SettingsAdapter extends ArrayAdapter<Category> {
         }
     }
 
-    private void startDialog(final int position) {
+    private void startDialog(final int position, final ViewHolder viewHolder) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         final LayoutInflater inflater = LayoutInflater.from(getContext());
         final View view = inflater.inflate(R.layout.dialog_category, null);
         final EditText newCategoryName = view.findViewById(R.id.categoryNameChange);
         final EditText newBalance = view.findViewById(R.id.categoryChangeMaxSum);
 
-        newCategoryName.setText(container.getCommonCategories().get(position).getName());
+        final Category category = container.getCommonCategories().get(position);
+        newCategoryName.setText(category.getName());
         newBalance.setText(Integer.toString(container.getCommonCategories().get(position).getMaxSum()));
 
         builder.setView(view)
@@ -148,6 +157,12 @@ class SettingsAdapter extends ArrayAdapter<Category> {
                         if (!container.updateCategory(position, name, newSum)) {
                             Toast.makeText(getContext(), "Ошибка!",
                                     Toast.LENGTH_LONG).show();
+                        } else {
+                            viewHolder.setActualChange();
+                            viewHolder.miniMaxSum.setText(Integer.toString(category.getMaxSum()));
+                            viewHolder.nameView.setText(category.getName());
+                            vFields.setSum(container.getSum());
+                            vFields.recountBalance();
                         }
                         dialog.cancel();
                     }

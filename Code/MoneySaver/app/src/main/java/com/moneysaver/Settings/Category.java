@@ -5,15 +5,15 @@ import static com.moneysaver.Config.getId;
 public class Category {
     private String name;
     private int maxSum;
-    private int spent;
+    private double spent;
     public boolean approved;
     public boolean changed;
     public boolean deleted;
     private int id;
 
-    public Category(String name, int maxSum){
+    public Category(String name, int maxSum, double spent){
         this.name = name;
-        this.spent= 0;
+        this.spent = spent;
         this.maxSum = maxSum;
         approved = true;
         changed = false;
@@ -21,7 +21,15 @@ public class Category {
         id = getId();
     }
 
-    public int getBalance() {
+    public Category(String name, int maxSum, double spent, int id) {
+        this.name = name;
+        this.maxSum = maxSum;
+        this.id = id;
+        approved = true;
+        this.spent = spent;
+    }
+
+    public double getBalance() {
         return this.maxSum - this.spent;
     }
 
@@ -35,6 +43,10 @@ public class Category {
 
     public void setName(String name){
         this.name = name;
+    }
+
+    public double getSpent() {
+        return spent;
     }
 
     public String getName(){

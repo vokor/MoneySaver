@@ -26,19 +26,24 @@ public class SaveCategories {
     }
 
     public void saveCategories(ArrayList<Category> listToSave) {
-        db.execSQL("DELETE FROM SaveCategories;");
         for (Category category: listToSave) {
             db.execSQL("INSERT INTO SaveCategories (Title, MaxSum, Spent) VALUES('"+ category.getName()
                     + "'," + category.getMaxSum() + ", 0);");
         }
     }
 
-    public void addCategories() {
-        for (Category category: categories) {
-            db.execSQL("INSERT INTO Category (Title, MaxSum, Spent) VALUES('"+ category.getName()
-                    + "'," + category.getMaxSum() + ", 0);");
-        }
+    public void deleteCategories() {
         db.execSQL("DELETE FROM SaveCategories;");
+    }
+
+    public void addCategories(ArrayList<Category> listToSave) {
+        db.execSQL("DELETE FROM Category;");
+        for (Category category: listToSave) {
+            if (!category.deleted) {
+                db.execSQL("INSERT INTO Category (Title, MaxSum, Spent) VALUES('" + category.getName()
+                        + "'," + category.getMaxSum() + ", " + category.getSpent() + ");");
+            }
+        }
     }
 
     public void setNamesToEdit(MultiAutoCompleteTextView autoCompleteTextView) {
@@ -58,7 +63,7 @@ public class SaveCategories {
         if ((cursor != null) && (cursor.getCount() > 0)) {
             cursor.moveToFirst();
             do {
-                list.add(new Category(cursor.getString(1),cursor.getInt(2)));
+                list.add(new Category(cursor.getString(0),cursor.getInt(1), cursor.getDouble(2)));
             } while (cursor.moveToNext());
             cursor.close();
         }

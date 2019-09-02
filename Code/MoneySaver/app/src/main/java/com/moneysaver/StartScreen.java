@@ -41,7 +41,7 @@ public class StartScreen extends AppCompatActivity {
         db.execSQL("CREATE TABLE IF NOT EXISTS Category ("+
                 "Title TEXT NOT NULL," +
                 "MaxSum INTEGER NOT NULL," +
-                "Spent INTEGER NOT NULL);");
+                "Spent DOUBLE NOT NULL);");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS SaveCategories ("+
                 "Title TEXT NOT NULL," +

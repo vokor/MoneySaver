@@ -64,7 +64,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         container = new Container(getListCategory(), saveCategories);
 
         vFields = new VariableFields((EditText) findViewById(R.id.newBalance), (TextView) findViewById(R.id.balanceWithoutCategoties), db);
-        vFields.setBalanceWithoutCategories(container.getSum());
+        vFields.setSum(container.getSum());
+        vFields.setBalanceWithoutCategories();
 
         categoryList = findViewById(R.id.categoryList);
         SettingsAdapter categoriesAdapter = new SettingsAdapter(this, R.layout.list_categories, vFields, container);
@@ -84,7 +85,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
             public boolean onKey(View v, int keyCode, KeyEvent event)
             {
                 autoCompleteTextView.getBackground().setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
-                return true;
+                return false;
             }
         });
     }
@@ -95,7 +96,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         if ((cursor != null) && (cursor.getCount() > 0)) {
             cursor.moveToFirst();
             do {
-                list.add(new Category(cursor.getString(1),cursor.getInt(2)));
+                list.add(new Category(cursor.getString(1),cursor.getInt(2), cursor.getDouble(3)));
             } while (cursor.moveToNext());
             cursor.close();
         }
@@ -108,7 +109,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
             case R.id.addCategories:
                 //First of all we try to check all input symbols and string pattern.
                 String newCategories = autoCompleteTextView.getText().toString();
-                if (!newCategories.matches("([" + rusSymbols + "_],( )*)*[" + rusSymbols + "_]*"))
+                if (newCategories.equals("") || !newCategories.matches("([" + rusSymbols + "_],( )*)*[" + rusSymbols + "_]*"))
                 {
                     String errorMessage = "Не удалось распознать введенные категории. Помните, что название может состоять только из русских букв, цифр и знака _. Используйте запятую для разделения";
                     errorShow(errorMessage, Settings.this);
@@ -195,6 +196,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 .setPositiveButton("Не хочу",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+                                container.abortEverithing();
                                 Toast.makeText(Settings.this, "Отмена!",
                                         Toast.LENGTH_LONG).show();
                                 dialog.cancel();

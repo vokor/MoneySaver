@@ -35,12 +35,18 @@ public class VariableFields {
         setListenerOnNewBalance();
     }
 
-    public void recountBalance(int sumCategories) {
+    public void recountBalance() {
         int balance = getUserBalance();
-        if (balance > sumCategories) {
+        if (balance >= sumCategories) {
             editNewBalance.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
             isNewBalanceCorrect = true;
             textBalanceWithCateg.setText(Integer.toString(balance - sumCategories));
+        }
+        else
+        {
+            editNewBalance.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+            isNewBalanceCorrect = false;
+            textBalanceWithCateg.setText(Integer.toString(baseBalance - sumCategories));
         }
     }
 
@@ -92,10 +98,14 @@ public class VariableFields {
         1) sumCategories = sum all balances from exists categories
         2) Set value of balance without categories. Simply difference between baseBalance (balance from DTB) and sumCategories
      */
-    public void setBalanceWithoutCategories(int sumCategories) {
+    public void setBalanceWithoutCategories() {
         int userBalance = getUserBalance();
-        if (userBalance > 0)
+        if (userBalance < 0)
             userBalance = baseBalance;
         textBalanceWithCateg.setText(Integer.toString(userBalance - sumCategories));
+    }
+
+    public void setSum(int sum) {
+        sumCategories = sum;
     }
 }
