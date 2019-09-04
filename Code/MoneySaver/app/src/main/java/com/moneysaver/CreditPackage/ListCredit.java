@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.moneysaver.GoalPackge.Goal;
 import com.moneysaver.R;
+import com.moneysaver.SQLite;
 
 import java.util.ArrayList;
 
@@ -26,7 +27,7 @@ public class ListCredit extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_credit);
-        db = getBaseContext().openOrCreateDatabase(dbName, MODE_PRIVATE, null);
+        db = SQLite.getDataBase(getBaseContext());
         vListView = findViewById(R.id.creditlist_view);
         showListView(getCreditList());
 

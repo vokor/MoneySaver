@@ -1,5 +1,6 @@
 package com.moneysaver.Settings;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -8,9 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
-import static com.moneysaver.Config.getBalance;
+import com.moneysaver.SQLite;
 
 public class VariableFields {
 
@@ -22,16 +21,13 @@ public class VariableFields {
 
     private EditText editNewBalance;
 
-    private SQLiteDatabase db;
-
     private int baseBalance;
 
-    public VariableFields(EditText eNewBal, TextView tBal, SQLiteDatabase db) {
+    public VariableFields(EditText eNewBal, TextView tBal, Context context) {
         this.editNewBalance = eNewBal;
         this.textBalanceWithCateg = tBal;
         this.isNewBalanceCorrect = true;
-        this.db = db;
-        this.baseBalance = getBalance(db);
+        this.baseBalance = SQLite.getBalance(context);
         setListenerOnNewBalance();
     }
 

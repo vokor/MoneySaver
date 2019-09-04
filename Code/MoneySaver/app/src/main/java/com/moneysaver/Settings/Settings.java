@@ -20,21 +20,19 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.moneysaver.Config;
 import com.moneysaver.MainActivity;
 import com.moneysaver.R;
+import com.moneysaver.SQLite;
 
 import java.util.ArrayList;
 
-import static com.moneysaver.Config.dbName;
-import static com.moneysaver.Config.getBalance;
 import static com.moneysaver.Config.rusSymbols;
 
 public class Settings extends AppCompatActivity implements View.OnClickListener {
 
     private ListView categoryList;
 
-    private SQLiteDatabase db;
+    //private SQLiteDatabase db;
 
     private MultiAutoCompleteTextView autoCompleteTextView;
 
@@ -47,7 +45,6 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
 
-        db = getBaseContext().openOrCreateDatabase(dbName, MODE_PRIVATE, null);
         ArrayList<String> baseCategories = new ArrayList<>();
 
         autoCompleteTextView = findViewById(R.id.autocomplete);
@@ -55,15 +52,15 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, baseCategories);
         autoCompleteTextView.setAdapter(adapter);
 
-        SaveCategories saveCategories = new SaveCategories(db);
+        SaveCategories saveCategories = new SaveCategories(getBaseContext());
         autoCompleteTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         saveCategories.setNamesToEdit(autoCompleteTextView);
         setListenerOnListCategories();
 
         // This is container with all categories (default, saved, changed, deleted)
-        container = new Container(getListCategory(), saveCategories);
+        container = new Container(SQLite.getCategoryList(getBaseContext(), "Category"), saveCategories);
 
-        vFields = new VariableFields((EditText) findViewById(R.id.newBalance), (TextView) findViewById(R.id.balanceWithoutCategoties), db);
+        vFields = new VariableFields((EditText) findViewById(R.id.newBalance), (TextView) findViewById(R.id.balanceWithoutCategoties), getBaseContext());
         vFields.setSum(container.getSum());
         vFields.setBalanceWithoutCategories();
 
@@ -88,19 +85,6 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 return false;
             }
         });
-    }
-
-    private ArrayList<Category> getListCategory() {
-        ArrayList<Category> list = new ArrayList<>();
-        Cursor cursor = db.rawQuery("SELECT * FROM Category;", null);
-        if ((cursor != null) && (cursor.getCount() > 0)) {
-            cursor.moveToFirst();
-            do {
-                list.add(new Category(cursor.getString(1),cursor.getInt(2), cursor.getDouble(3)));
-            } while (cursor.moveToNext());
-            cursor.close();
-        }
-        return list;
     }
 
     @Override
@@ -133,6 +117,9 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 dialogWindow();
                 break;
             case R.id.abortChanges:
+                container.abortEverithing();
+                Intent intent1 = new Intent(Settings.this, MainActivity.class);
+                startActivity(intent1);
                 break;
         }
     }
@@ -196,7 +183,6 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 .setPositiveButton("Не хочу",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                container.abortEverithing();
                                 Toast.makeText(Settings.this, "Отмена!",
                                         Toast.LENGTH_LONG).show();
                                 dialog.cancel();
@@ -206,7 +192,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 container.saveEverything();
-                                Config.setBalance(db, vFields.getUserBalance());
+                                SQLite.setBalance(getBaseContext(), vFields.getUserBalance());
                                 Toast.makeText(Settings.this, "Сохранено!",
                                         Toast.LENGTH_LONG).show();
                                 dialog.cancel();

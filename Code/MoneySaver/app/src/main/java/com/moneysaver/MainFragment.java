@@ -1,7 +1,5 @@
 package com.moneysaver;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -10,13 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.moneysaver.R;
+import com.moneysaver.Settings.Category;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.Context.MODE_PRIVATE;
-import static com.moneysaver.Config.dbName;
 
 public class MainFragment extends ListFragment {
     private List<String> categories = new ArrayList<String>();
@@ -26,19 +21,12 @@ public class MainFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        SQLiteDatabase db;
-        db = getContext().openOrCreateDatabase(dbName, MODE_PRIVATE, null);
-        Cursor cursor = db.rawQuery("SELECT * FROM Category;", null);
-        if ((cursor != null) && (cursor.getCount() > 0)) {
-            cursor.moveToFirst();
-            do {
-                categories.add(cursor.getString(1));
-                cost.add(Integer.toString(cursor.getInt(2)));
-                int value = cursor.getInt(3) - cursor.getInt(2);
-                balance.add(Integer.toString(value));
-            } while (cursor.moveToNext());
-            cursor.close();
+        ArrayList<Category> listCategories = SQLite.getCategoryList(getContext(), "Category");
+        for (Category category: listCategories) {
+            categories.add(category.getName());
+            double value = category.getMaxSum() - category.getSpent();
+            cost.add(Double.toString(value));
+            balance.add(Integer.toString(category.getMaxSum()));
         }
 
         View view = inflater.inflate(R.layout.content_main, container, false);

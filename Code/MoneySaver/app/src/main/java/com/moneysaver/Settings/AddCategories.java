@@ -3,7 +3,6 @@ package com.moneysaver.Settings;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -16,11 +15,7 @@ import com.moneysaver.R;
 
 import java.util.ArrayList;
 
-import static com.moneysaver.Config.dbName;
-import static com.moneysaver.Config.getBalance;
-
 public class AddCategories  extends AppCompatActivity implements View.OnClickListener{
-    private SQLiteDatabase db;
     private AdapterCategory adapter;
     private String[] categoryNames;
     private int balance;
@@ -31,8 +26,6 @@ public class AddCategories  extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_categories);
-
-        db = getBaseContext().openOrCreateDatabase(dbName, MODE_PRIVATE, null);
 
         final Button saveChanges = findViewById(R.id.button_add);
         saveChanges.setOnClickListener(this);
@@ -87,7 +80,7 @@ public class AddCategories  extends AppCompatActivity implements View.OnClickLis
                             public void onClick(DialogInterface dialog, int id) {
                                 Toast.makeText(AddCategories.this, "Сохранено!",
                                         Toast.LENGTH_LONG).show();
-                                SaveCategories saved = new SaveCategories(db);
+                                SaveCategories saved = new SaveCategories(getBaseContext());
                                 saved.saveCategories(categories);
                                 Intent intent = new Intent(AddCategories.this, Settings.class);
                                 startActivity(intent);

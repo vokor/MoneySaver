@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.moneysaver.R;
+import com.moneysaver.SQLite;
 
 import java.util.ArrayList;
 
@@ -19,15 +20,13 @@ import static com.moneysaver.Config.dbName;
 public class ListGoal extends AppCompatActivity {
     private ListView vListView;
     private Goal choosenGoal;
-    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_goal);
-        db = getBaseContext().openOrCreateDatabase(dbName, MODE_PRIVATE, null);
         vListView = findViewById(R.id.goallist_view);
-        showListView(getGoalList());
+        showListView(SQLite.getGoalList(getBaseContext()));
 
         Button button_add = findViewById(R.id.button_add);
 
@@ -39,19 +38,6 @@ public class ListGoal extends AppCompatActivity {
             }
         };
         button_add.setOnClickListener(listener);
-    }
-
-    private ArrayList<Goal> getGoalList() {
-        ArrayList<Goal> list = new ArrayList<>();
-        Cursor cursor = db.rawQuery("SELECT * FROM Goal;", null);
-        if ((cursor != null) && (cursor.getCount() > 0)) {
-            cursor.moveToFirst();
-            do {
-                list.add(new Goal(cursor.getString(1),cursor.getDouble(2), cursor.getDouble(3)));
-            } while (cursor.moveToNext());
-            cursor.close();
-        }
-        return list;
     }
 
     private void showListView(ArrayList<Goal> list){

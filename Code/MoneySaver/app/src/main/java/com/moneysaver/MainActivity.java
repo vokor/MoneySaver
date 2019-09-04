@@ -22,9 +22,6 @@ import com.moneysaver.ExpensePackage.ListExpense;
 import com.moneysaver.GoalPackge.ListGoal;
 import com.moneysaver.Settings.Settings;
 
-import static com.moneysaver.Config.dbName;
-import static com.moneysaver.Config.getBalance;
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -64,11 +61,11 @@ public class MainActivity extends AppCompatActivity
      */
     private void getInfoFromBase() {
         SQLiteDatabase db;
-        db = getBaseContext().openOrCreateDatabase(dbName, MODE_PRIVATE, null);
+        db = SQLite.getDataBase(getBaseContext());
 
         TextView textView = findViewById(R.id.balance);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
-        textView.setText("Баланс: ".concat(Integer.toString(getBalance(db))));
+        textView.setText("Баланс: ".concat(Integer.toString(SQLite.getBalance(getBaseContext()))));
     }
 
     @Override
