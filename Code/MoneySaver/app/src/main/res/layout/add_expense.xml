@@ -51,7 +51,7 @@
             android:text="Категория" />
 
         <Spinner
-            android:id="@+id/categoryExpenseSpinner"
+            android:id="@+id/categoryExpenseSpinnerAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

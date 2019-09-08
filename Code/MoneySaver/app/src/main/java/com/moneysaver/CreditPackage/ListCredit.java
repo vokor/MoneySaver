@@ -21,15 +21,13 @@ import static com.moneysaver.Config.dbName;
 public class ListCredit extends AppCompatActivity {
     private ListView vListView;
     private Credit choosenCredit;
-    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_credit);
-        db = SQLite.getDataBase(getBaseContext());
         vListView = findViewById(R.id.creditlist_view);
-        showListView(getCreditList());
+        showListView(SQLite.getCreditList(getBaseContext()));
 
         Button button_add = findViewById(R.id.button_add);
 
@@ -41,19 +39,6 @@ public class ListCredit extends AppCompatActivity {
             }
         };
         button_add.setOnClickListener(listener);
-    }
-
-    private ArrayList<Credit> getCreditList() {
-        ArrayList<Credit> list = new ArrayList<>();
-        Cursor cursor = db.rawQuery("SELECT * FROM Goal;", null);
-        if ((cursor != null) && (cursor.getCount() > 0)) {
-            cursor.moveToFirst();
-            do {
-                list.add(new Credit(cursor.getString(1),cursor.getDouble(2), cursor.getDouble(3)));
-            } while (cursor.moveToNext());
-            cursor.close();
-        }
-        return list;
     }
 
     private void showListView(ArrayList<Credit> list){

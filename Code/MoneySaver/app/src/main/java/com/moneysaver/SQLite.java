@@ -4,10 +4,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.moneysaver.CreditPackage.Credit;
+import com.moneysaver.ExpensePackage.AddExpense;
+import com.moneysaver.ExpensePackage.Expense;
 import com.moneysaver.GoalPackge.Goal;
 import com.moneysaver.Settings.Category;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.moneysaver.Config.dbName;
@@ -32,6 +36,63 @@ public class SQLite {
         return list;
     }
 
+    public static ArrayList<Credit> getCreditList(Context context) {
+        ArrayList<Credit> list = new ArrayList<>();
+        SQLiteDatabase db = getDataBase(context);
+        Cursor cursor = db.rawQuery("SELECT * FROM Credit;", null);
+        if ((cursor != null) && (cursor.getCount() > 0)) {
+            cursor.moveToFirst();
+            do {
+                list.add(new Credit(cursor.getString(1),cursor.getDouble(2), cursor.getDouble(3)));
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        return list;
+    }
+
+    public static ArrayList<Expense> getExpenseList(Context context) {
+        ArrayList<Expense> list = new ArrayList<>();
+        SQLiteDatabase db = getDataBase(context);
+        Cursor cursor = db.rawQuery("SELECT * FROM Expense;", null);
+        if ((cursor != null) && (cursor.getCount() > 0)) {
+            cursor.moveToFirst();
+            do {
+                Date date;
+                try {
+                    date = AddExpense.format.parse(cursor.getString(3));
+                } catch (Exception e) {
+                    continue;
+                }
+                String notes = "";
+                try {
+                    notes = cursor.getString(4);
+                } catch (Exception e) {
+                    notes = "";
+                }
+                list.add(new Expense(cursor.getString(0),
+                        cursor.getDouble(1),
+                        date,
+                        cursor.getString(2),
+                        notes));
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        return list;
+    }
+
+    public static void AddExpense(Context context, Expense expense) {
+        SQLiteDatabase db = getDataBase(context);
+        String s = expense.getDate();
+        db.execSQL("INSERT INTO Expense (Name, Cost, Category, Data, Notes) VALUES('"
+                + expense.getName()
+                + "'," + expense.getCost()
+                + ", '" + expense.getCategory()
+                + "', '" + expense.getDate()
+                + "', '" + expense.getNotes()
+                + "');");
+
+    }
+
     public static ArrayList<Category> getCategoryList(Context context, String name) {
         ArrayList<Category> list = new ArrayList<>();
         SQLiteDatabase db = getDataBase(context);
@@ -44,6 +105,17 @@ public class SQLite {
             cursor.close();
         }
         return list;
+    }
+
+    public static String[] getCategoryNames(Context context, String name) {
+        ArrayList<Category> categories = getCategoryList(context, name);
+        String[] names = new String[categories.size()];
+        int it = 0;
+        for (Category category: categories) {
+            names[it] = category.getName();
+            it++;
+        }
+        return names;
     }
 
     public static void saveCategories(Context context, ArrayList<Category> listToSave, String name) {
@@ -101,6 +173,13 @@ public class SQLite {
                 "Name TEXT NOT NULL," +
                 "AllSum DOUBLE NOT NULL," +
                 "Payout DOUBLE NOT NULL," +
+                "Notes TEXT);");
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS Expense ("+
+                "Name TEXT NOT NULL," +
+                "Cost DOUBLE NOT NULL," +
+                "Category TEXT NOT NULL," +
+                "Data TEXT NOT NULL," +
                 "Notes TEXT);");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS Balance (Balance INTEGER);");

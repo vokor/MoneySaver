@@ -6,19 +6,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.moneysaver.R;
+import com.moneysaver.SQLite;
+import com.moneysaver.Settings.Category;
+import com.moneysaver.Settings.Settings;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class AddExpense extends AppCompatActivity {
-    EditText name;
-    EditText cost;
-    EditText date;
-    EditText notes;
-    Spinner category;
-    Button createButton;
+    private EditText name;
+    private EditText cost;
+    private EditText date;
+    private EditText notes;
+    private Spinner category;
+    private Button createButton;
+    public static final SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +35,57 @@ public class AddExpense extends AppCompatActivity {
         setContentView(R.layout.add_expense);
 
         name = findViewById(R.id.nameExpenseEdit);
-        cost = findViewById(R.id.costExpenseEdit);
+        StartCostListener();
         date = findViewById(R.id.dateExpenseEdit);
+        date.setText(AddExpense.format.format(Calendar.getInstance().getTime()));
         notes = findViewById(R.id.notesExpenseEdit);
-        category = findViewById(R.id.categoryExpenseSpinner);
+        category = findViewById(R.id.categoryExpenseSpinnerAdd);
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, SQLite.getCategoryNames(getBaseContext(), "Category"));
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        category.setAdapter(adapter);
+        StartButtonListener();
+    }
+
+
+    private void StartButtonListener() {
         createButton = findViewById(R.id.createExpenseButton);
 
         createButton.setEnabled(false);
+
+        View.OnClickListener listenerCreate = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String dateStr = date.getText().toString();
+                String nameStr = "";
+                double costStr = Double.parseDouble(cost.getText().toString());
+                String notesStr = "";
+                if (!name.isDirty()) {
+                    nameStr = name.getText().toString();
+                }
+                if (!notes.isDirty()) {
+                    notesStr = notes.getText().toString();
+                }
+                String categoryStr = category.getSelectedItem().toString();
+
+                if (!checkInfo(dateStr, categoryStr, costStr)) {
+                    return;
+                }
+                Intent i = new Intent();
+                try {
+                    i.putExtra("value", new Expense(nameStr, costStr, format.parse(dateStr), categoryStr, notesStr));
+                } catch (Exception e) {
+                    return;
+                }
+                setResult(RESULT_OK, i);
+                finish();
+            }
+        };
+        createButton.setOnClickListener(listenerCreate);
+    }
+
+    private void StartCostListener() {
+        cost = findViewById(R.id.costExpenseEdit);
 
         cost.addTextChangedListener(new TextWatcher() {
 
@@ -52,25 +105,25 @@ public class AddExpense extends AppCompatActivity {
                 }
             }});
 
-        View.OnClickListener listenerCreate = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String nameStr = name.getText().toString();
-                String costStr = cost.getText().toString();
-                String dateStr = date.getText().toString();
-                String notesStr = notes.getText().toString();
-                String categoryStr = category.getSelectedItem().toString();
+    }
 
-                Intent i = new Intent();
-                i.putExtra("name", nameStr);
-                i.putExtra("cost", costStr);
-                i.putExtra("date", dateStr);
-                i.putExtra("notes", notesStr);
-                i.putExtra("category", categoryStr);
-                setResult(0, i);
-                finish();
+    private boolean checkInfo(String date, String name, double cost) {
+        try {
+            format.parse(date);
+        } catch (Exception e) {
+            String err = "Недопустимый формат даты. Дата оформляется по шаблону: 'dd.MM.yyyy'";
+            Settings.errorShow(err, getBaseContext());
+            return false;
+        }
+        for (Category category: SQLite.getCategoryList(getBaseContext(), "Category")) {
+            if (name.equals(category.getName())) {
+                if (category.getBalance() < cost) {
+                    String err = "Остаток по категории '" + category.getName() + "'" + "составляет: " + category.getBalance() + ". Вы должны указать меньшую сумму";
+                    Settings.errorShow(err, getBaseContext());
+                } else
+                    return true;
             }
-        };
-        createButton.setOnClickListener(listenerCreate);
+        }
+        return false;
     }
 }

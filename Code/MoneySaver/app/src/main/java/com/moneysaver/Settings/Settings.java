@@ -32,8 +32,6 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
     private ListView categoryList;
 
-    //private SQLiteDatabase db;
-
     private MultiAutoCompleteTextView autoCompleteTextView;
 
     private VariableFields vFields;
