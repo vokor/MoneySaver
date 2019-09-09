@@ -4,15 +4,22 @@ import java.io.Serializable;
 
 public class Credit implements Serializable {
     private String name;
-    private double cost;
-    private double saved;
+    private double allSum;
+    private double payout;
     private String notes;
 
-    public Credit(String name, double cost, String notes) {
+    public Credit(String name, double allSum, double payout, String notes) {
         this.name = name;
-        this.cost = cost;
-        this.saved = 0;
+        this.allSum = allSum;
+        this.payout = payout;
         this.notes = notes;
+    }
+
+    public Credit(String name, double allSum, double payout) {
+        this.name = name;
+        this.allSum = allSum;
+        this.payout = payout;
+        this.notes = "";
     }
 
     public String getName() {
@@ -23,12 +30,12 @@ public class Credit implements Serializable {
         return notes;
     }
 
-    public Double getCost() {
-        return cost;
+    public Double getAllSum() {
+        return allSum;
     }
 
-    public Double getSaved() {
-        return saved;
+    public Double getPayout() {
+        return payout;
     }
 
     public void setName(String name) {
@@ -39,15 +46,15 @@ public class Credit implements Serializable {
         this.notes = notes;
     }
 
-    public void setCost(Double cost) {
-        this.cost = cost;
+    public void setAllSum(Double allSum) {
+        this.allSum = allSum;
     }
 
-    public void setSaved(Double saved) {
-        this.saved = saved;
+    public void setPayout(Double payout) {
+        this.payout = payout;
     }
 
     public void save (Double summ){
-        saved = saved + summ;
+        payout = payout + summ;
     }
 }

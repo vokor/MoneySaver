@@ -10,20 +10,21 @@ import android.widget.ListView;
 
 import com.moneysaver.GoalPackge.DeleteGoal;
 import com.moneysaver.R;
+import com.moneysaver.SQLite;
 
 import java.util.ArrayList;
 
 public class ListExpense extends AppCompatActivity {
-    ListView vListView;
-    ArrayList<Expense> list;
-    Expense choosenExpense;
+    private ListView vListView;
+    private ArrayList<Expense> list;
+    private Expense choosenExpense;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_expense);
         vListView = findViewById(R.id.ExpenselistView);
-        showListView(list);
+        showListView();
 
         Button button_add = findViewById(R.id.button_add);
 
@@ -38,7 +39,8 @@ public class ListExpense extends AppCompatActivity {
         button_add.setOnClickListener(listener);
     }
 
-    private void showListView(ArrayList<Expense> list){
+    private void showListView(){
+        list = SQLite.getExpenseList(getBaseContext());
         final AdapterExpense a = new AdapterExpense(list);
         vListView.setAdapter(a);
         vListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -46,7 +48,7 @@ public class ListExpense extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 Expense item = (Expense)a.getItem(position);
                 choosenExpense = item;
-                Intent intent = new Intent(view.getContext(), Expense.class);
+                Intent intent = new Intent(view.getContext(), ExpenseView.class);
                 intent.putExtra(Expense.class.getSimpleName(), item);
                 startActivityForResult(intent, 1);
             }
@@ -76,16 +78,21 @@ public class ListExpense extends AppCompatActivity {
                     }
                 }
                 case 2: {
-                    // создать цель
+                    Bundle arguments = data.getExtras();
+                    Expense expense = (Expense)arguments.getSerializable("value");
+                    SQLite.AddExpense(getBaseContext(), expense);showListView();
+                    break;
                 }
                 case 3: {
                     // edit goal
+                    break;
                 }
                 case 4: {
                     String b = data.getStringExtra("button");
                     if(b.equals("delete")){
                         // delete goal
                     }
+                    break;
                 }
             }
         }

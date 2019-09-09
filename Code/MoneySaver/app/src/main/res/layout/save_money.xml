@@ -34,8 +34,6 @@
                 android:id="@+id/nameExpenseEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="29dp"
-                android:layout_below="@+id/null"
-                android:layout_alignStart="@+id/null"
                 android:ems="10" />
         </LinearLayout>
 

@@ -1,6 +1,8 @@
 package com.moneysaver.GoalPackge;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,20 +11,22 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.moneysaver.R;
+import com.moneysaver.SQLite;
 
 import java.util.ArrayList;
 
+import static com.moneysaver.Config.dbName;
+
 public class ListGoal extends AppCompatActivity {
-    ListView vListView;
-    ArrayList<Goal> list;
-    Goal choosenGoal;
+    private ListView vListView;
+    private Goal choosenGoal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_goal);
         vListView = findViewById(R.id.goallist_view);
-        showListView(list);
+        showListView(SQLite.getGoalList(getBaseContext()));
 
         Button button_add = findViewById(R.id.button_add);
 

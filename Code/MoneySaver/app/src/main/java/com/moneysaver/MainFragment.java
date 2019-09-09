@@ -8,24 +8,32 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class MainFragment extends ListFragment {
-    String[] categories = new String[]{
-            "Еда", "Развлечения", "Долги", "Прочее", "Услуги", "Бар", "Игры"
-    };
+import com.moneysaver.Settings.Category;
 
-    String[] cost = new String[]{
-            "500", "600", "700", "300", "333", "800", "1000"
-    };
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainFragment extends ListFragment {
+    private List<String> categories = new ArrayList<String>();
+    private List<String> balance = new ArrayList<String>();
+    private List<String> cost = new ArrayList<String>();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // устанавливаем макет
+        ArrayList<Category> listCategories = SQLite.getCategoryList(getContext(), "Category");
+        for (Category category: listCategories) {
+            categories.add(category.getName());
+            double value = category.getMaxSum() - category.getSpent();
+            cost.add(Double.toString(value));
+            balance.add(Integer.toString(category.getMaxSum()));
+        }
+
         View view = inflater.inflate(R.layout.content_main, container, false);
-        // создаем простой ArrayAdapter со стандартным макетом и входными данными
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_1, categories);
         setListAdapter(adapter);
-
         return view;
 
     }
@@ -34,7 +42,7 @@ public class MainFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         // заменяем текст в другом фрагменте по нажатию на элемент списка
         DetailsFragment detailsFragment = (DetailsFragment) getFragmentManager().findFragmentById(R.id.detailsfragment);
-        detailsFragment.change(categories[position], cost[position]);
+        detailsFragment.change(cost.get(position), balance.get(position));
         getListView().setSelector(android.R.color.holo_blue_bright);
     }
 }

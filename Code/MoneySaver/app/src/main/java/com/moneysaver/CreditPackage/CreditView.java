@@ -16,7 +16,7 @@ public class CreditView extends AppCompatActivity {
         TextView name = findViewById(R.id.textViewName);
         name.setText(credit.getName());
         TextView cost = findViewById(R.id.textViewCost);
-        cost.setText(credit.getSaved() + "/" + credit.getCost());
+        cost.setText(credit.getPayout() + "/" + credit.getAllSum());
         TextView notes = findViewById(R.id.textViewNotes);
         notes.setText(credit.getNotes());
     }
