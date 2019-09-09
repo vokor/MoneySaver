@@ -21,6 +21,7 @@ import com.moneysaver.ExpensePackage.AddExpense;
 import com.moneysaver.ExpensePackage.ListExpense;
 import com.moneysaver.GoalPackge.ListGoal;
 import com.moneysaver.Settings.Settings;
+import com.moneysaver.Statistics.Statistics;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
             intent = new Intent(MainActivity.this, Settings.class);
         } else if (id == R.id.nav_statistics) {
-
+            intent = new Intent(MainActivity.this, Statistics.class);
         } /*else if (id == R.id.nav_statistics) {
         }*/
         if (intent == null)

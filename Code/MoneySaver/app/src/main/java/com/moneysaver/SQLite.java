@@ -152,7 +152,6 @@ public class SQLite {
 
     public static void initialiseDataBase(Context context) {
         SQLiteDatabase db = getDataBase(context);
-
         db.execSQL("CREATE TABLE IF NOT EXISTS Category ("+
                 "Title TEXT NOT NULL," +
                 "MaxSum INTEGER NOT NULL," +
@@ -192,13 +191,13 @@ public class SQLite {
      */
     private static void tryAddBaseInfo(SQLiteDatabase db) {
         Cursor cursor;
-        for (String category:Config.baseCategories) {
+        /*for (String category:Config.baseCategories) {
             cursor = db.rawQuery("SELECT * FROM Category WHERE Title = '" +
                     category + "';", null);
             if (!(cursor.getCount() > 0))
                 db.execSQL("INSERT INTO Category (Title, MaxSum, Spent) VALUES('" +
                         category + "', 0, 0);");
-        }
+        }*/
         cursor = db.rawQuery("SELECT * FROM Balance;", null);
         if (!(cursor.getCount() > 0))
             db.execSQL("INSERT INTO Balance (Balance) VALUES(0);");

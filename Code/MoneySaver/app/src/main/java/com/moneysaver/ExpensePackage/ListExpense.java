@@ -28,7 +28,6 @@ public class ListExpense extends AppCompatActivity {
 
         Button button_add = findViewById(R.id.button_add);
 
-
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
