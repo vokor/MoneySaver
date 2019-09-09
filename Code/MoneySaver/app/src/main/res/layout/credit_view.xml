@@ -15,9 +15,9 @@
         <TextView
             android:id="@+id/textViewName"
             android:layout_width="match_parent"
-            android:textSize = "20sp"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_height="wrap_content" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/textViewCost"
