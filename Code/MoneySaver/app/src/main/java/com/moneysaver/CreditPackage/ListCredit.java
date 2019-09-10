@@ -49,7 +49,7 @@ public class ListCredit extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 Credit item = (Credit)a.getItem(position);
                 choosenCredit = item;
-                Intent intent = new Intent(view.getContext(), Credit.class);
+                Intent intent = new Intent(view.getContext(), CreditView.class);
                 intent.putExtra(Credit.class.getSimpleName(), item);
                 startActivityForResult(intent, 1);
             }
@@ -61,14 +61,14 @@ public class ListCredit extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case 1: {
-                    String b = data.getStringExtra("button");
-                    switch (b) {
+                    String a = data.getStringExtra("activity");
+                    switch (a) {
                         case "ok":
                             break;
                         case "edit": {
-                            Intent intent = new Intent(ListCredit.this, EditCredit.class);
-                            intent.putExtra(Credit.class.getSimpleName(), choosenCredit);
-                            startActivityForResult(intent, 3);
+                            //Intent intent = new Intent(ListCredit.this, EditCredit.class);
+                            //intent.putExtra(Credit.class.getSimpleName(), choosenCredit);
+                            //startActivityForResult(intent, 3);
                             break;
                         }
                         case "delete": {

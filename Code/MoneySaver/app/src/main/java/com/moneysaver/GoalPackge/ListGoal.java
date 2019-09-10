@@ -48,7 +48,7 @@ public class ListGoal extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 Goal item = (Goal)a.getItem(position);
                 choosenGoal = item;
-                Intent intent = new Intent(view.getContext(), Goal.class);
+                Intent intent = new Intent(view.getContext(), GoalView.class);
                 intent.putExtra(Goal.class.getSimpleName(), item);
                 startActivityForResult(intent, 1);
             }
