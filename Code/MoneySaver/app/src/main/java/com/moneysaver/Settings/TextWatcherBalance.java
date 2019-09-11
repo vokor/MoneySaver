@@ -23,22 +23,22 @@ public class TextWatcherBalance implements TextWatcher {
     @Override
     public void afterTextChanged(Editable s) {
         String str = editText.getText().toString();
-        int appBalance;
+        double appBalance;
         if (category.approved)
-            appBalance = Integer.parseInt(balanceForCategories.getText().toString()) + category.getMaxSum();
+            appBalance = Double.parseDouble(balanceForCategories.getText().toString()) + category.getMaxSum();
         else
-            appBalance = Integer.parseInt(balanceForCategories.getText().toString());
-        balanceForCategories.setText(Integer.toString(appBalance));
-        int maxBalance = checkStr(str, appBalance);
+            appBalance = Double.parseDouble(balanceForCategories.getText().toString());
+        balanceForCategories.setText(Double.toString(appBalance));
+        double maxBalance = checkStr(str, appBalance);
         if (!category.approved) {
             editText.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
             return;
         }
         editText.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
-        balanceForCategories.setText(Integer.toString(appBalance - maxBalance));
+        balanceForCategories.setText(Double.toString(appBalance - maxBalance));
     }
 
-    private int checkStr(String str, int appBalance) {
+    private double checkStr(String str, double appBalance) {
         try{
             int number = Integer.parseInt(str);
             if (number < 0 || number > appBalance)

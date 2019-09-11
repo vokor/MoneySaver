@@ -3,6 +3,8 @@ package com.moneysaver.ExpensePackage;
 import java.io.Serializable;
 import java.util.Date;
 
+import static com.moneysaver.Config.setSpent;
+
 public class Expense implements Serializable {
     private String name;
     private double cost;
@@ -43,7 +45,7 @@ public class Expense implements Serializable {
     }
 
     public void setCost(Double cost){
-        this.cost = cost;
+        this.cost = setSpent(cost);
     }
 
     public void setCategory(String category){

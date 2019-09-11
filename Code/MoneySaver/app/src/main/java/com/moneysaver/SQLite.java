@@ -82,7 +82,6 @@ public class SQLite {
 
     public static void AddExpense(Context context, Expense expense) {
         SQLiteDatabase db = getDataBase(context);
-        String s = expense.getDate();
         db.execSQL("INSERT INTO Expense (Name, Cost, Category, Data, Notes) VALUES('"
                 + expense.getName()
                 + "'," + expense.getCost()
@@ -133,8 +132,8 @@ public class SQLite {
         db.execSQL("DELETE FROM "+ name + ";");
     }
 
-    public static int getBalance(Context context) {
-        int balance;
+    public static double getBalance(Context context) {
+        double balance;
         Cursor cursor;
         SQLiteDatabase db = getDataBase(context);
         cursor = db.rawQuery("SELECT * FROM Balance;", null);
@@ -144,10 +143,37 @@ public class SQLite {
         return balance;
     }
 
-    public static void setBalance(Context context, int value) {
+    public static void setBalance(Context context, double value) {
         SQLiteDatabase db = getDataBase(context);
         db.execSQL("DELETE FROM Balance;");
         db.execSQL("INSERT INTO Balance (Balance) VALUES(" + value + ");");
+    }
+
+    public static void updateBalance(Context context, double value, int type) {
+        double balance = getBalance(context);
+        switch (type) {
+            case 0:
+                setBalance(context, value);
+                break;
+            case 1:
+                setBalance(context, balance + value);
+                break;
+            case 2:
+                setBalance(context, balance - value);
+                break;
+        }
+    }
+
+    public static void updateCategory(Context context, Expense expense) {
+        SQLiteDatabase db = getDataBase(context);
+        Cursor cursor;
+        cursor = db.rawQuery("SELECT * FROM Category WHERE Title = '" +
+                expense.getCategory() + "';", null);
+        cursor.moveToFirst();
+        double newSpent = cursor.getDouble(2) + expense.getCost();
+        db.execSQL("UPDATE Category SET Spent ='"+ newSpent + "' WHERE Title = '" + expense.getCategory() + "';");
+        cursor.close();
+        db.close();
     }
 
     public static void initialiseDataBase(Context context) {
@@ -181,9 +207,8 @@ public class SQLite {
                 "Data TEXT NOT NULL," +
                 "Notes TEXT);");
 
-        db.execSQL("CREATE TABLE IF NOT EXISTS Balance (Balance INTEGER);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS Balance (Balance DOUBLE);");
         tryAddBaseInfo(db);
-
     }
 
     /*
@@ -191,13 +216,6 @@ public class SQLite {
      */
     private static void tryAddBaseInfo(SQLiteDatabase db) {
         Cursor cursor;
-        /*for (String category:Config.baseCategories) {
-            cursor = db.rawQuery("SELECT * FROM Category WHERE Title = '" +
-                    category + "';", null);
-            if (!(cursor.getCount() > 0))
-                db.execSQL("INSERT INTO Category (Title, MaxSum, Spent) VALUES('" +
-                        category + "', 0, 0);");
-        }*/
         cursor = db.rawQuery("SELECT * FROM Balance;", null);
         if (!(cursor.getCount() > 0))
             db.execSQL("INSERT INTO Balance (Balance) VALUES(0);");

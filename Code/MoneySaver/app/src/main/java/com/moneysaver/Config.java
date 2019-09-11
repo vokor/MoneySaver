@@ -14,4 +14,8 @@ public class Config {
         actualId += 1;
         return actualId;
     }
+
+    public static double setSpent(double value) {
+        return (double) Math.round(value * 10) / 10;
+    }
 }

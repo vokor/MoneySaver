@@ -79,7 +79,8 @@ public class ListExpense extends AppCompatActivity {
                 case 2: {
                     Bundle arguments = data.getExtras();
                     Expense expense = (Expense)arguments.getSerializable("value");
-                    SQLite.AddExpense(getBaseContext(), expense);showListView();
+                    SQLite.AddExpense(getBaseContext(), expense);
+                    SQLite.updateCategory(getBaseContext(), expense);
                     break;
                 }
                 case 3: {

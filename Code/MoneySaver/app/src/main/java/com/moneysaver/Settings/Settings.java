@@ -123,8 +123,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
     //Check balance which user setted.
     private boolean checkNewBalance() {
-        int type = vFields.getUserBalance();
-        if (type == -2) {
+        double type = vFields.getUserBalance();
+        if (type == -2.0) {
             String errMessage = "Поле Баланс должно содержать неотрицательное число!";
             errorShow(errMessage, Settings.this);
             return false;

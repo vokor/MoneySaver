@@ -8,21 +8,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class DetailsFragment extends Fragment {
-    TextView balance, cost;
+    TextView balance, spent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.details_fragment, container, false);
         balance = view.findViewById(R.id.balance);
-        cost = view.findViewById(R.id.cost);
-
+        spent = view.findViewById(R.id.spent);
         return view;
     }
 
-    // заменяем текст в TextView этого фрагмента
     public void change(String text, String text2) {
         balance.setText(text);
-        cost.setText(text2);
+        spent.setText(text2);
     }
 }

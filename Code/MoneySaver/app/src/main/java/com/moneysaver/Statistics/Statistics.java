@@ -74,14 +74,11 @@ public class Statistics extends AppCompatActivity implements SeekBar.OnSeekBarCh
         chart.setHoleColor(Color.WHITE);
 
         chart.setTransparentCircleColor(Color.WHITE);
-        chart.setTransparentCircleAlpha(110);
 
         chart.setHoleRadius(58f);
         chart.setTransparentCircleRadius(61f);
 
         chart.setDrawCenterText(true);
-
-        chart.setRotationAngle(0);
 
         chart.setRotationEnabled(true);
         chart.setHighlightPerTapEnabled(true);
@@ -140,16 +137,12 @@ public class Statistics extends AppCompatActivity implements SeekBar.OnSeekBarCh
         colors.add(ColorTemplate.getHoloBlue());
 
         dataSet.setColors(colors);
-        //dataSet.setSelectionShift(0f);
 
         PieData data = new PieData(dataSet);
         data.setValueFormatter(new PercentFormatter(chart));
         data.setValueTextSize(11f);
         data.setValueTextColor(Color.WHITE);
-        //data.setValueTypeface(tfLight);
         chart.setData(data);
-
-        // undo all highlights
         chart.highlightValues(null);
 
         chart.invalidate();

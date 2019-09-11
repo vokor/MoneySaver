@@ -15,7 +15,7 @@ import java.util.List;
 
 public class MainFragment extends ListFragment {
     private List<String> categories = new ArrayList<String>();
-    private List<String> balance = new ArrayList<String>();
+    private List<String> spent = new ArrayList<String>();
     private List<String> cost = new ArrayList<String>();
 
 
@@ -26,7 +26,7 @@ public class MainFragment extends ListFragment {
             categories.add(category.getName());
             double value = category.getMaxSum() - category.getSpent();
             cost.add(Double.toString(value));
-            balance.add(Integer.toString(category.getMaxSum()));
+            spent.add(Double.toString(category.getSpent()));
         }
 
         View view = inflater.inflate(R.layout.content_main, container, false);
@@ -42,7 +42,7 @@ public class MainFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         // заменяем текст в другом фрагменте по нажатию на элемент списка
         DetailsFragment detailsFragment = (DetailsFragment) getFragmentManager().findFragmentById(R.id.detailsfragment);
-        detailsFragment.change(cost.get(position), balance.get(position));
+        detailsFragment.change(cost.get(position), spent.get(position));
         getListView().setSelector(android.R.color.holo_blue_bright);
     }
 }
