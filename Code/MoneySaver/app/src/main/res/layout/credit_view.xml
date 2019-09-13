@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:inputType="text"
+            android:maxLength="10"
             android:textSize="20sp" />
 
         <TextView
@@ -39,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
+            android:maxLength="6"
             android:textSize="20sp" />
 
         <TextView
@@ -53,6 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
+            android:maxLines="6"
             android:textSize="20sp" />
 
         <TextView
