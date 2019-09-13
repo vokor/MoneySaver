@@ -100,7 +100,7 @@ public class SQLite {
         if ((cursor != null) && (cursor.getCount() > 0)) {
             cursor.moveToFirst();
             do {
-                list.add(new Category(cursor.getString(1),cursor.getInt(2), cursor.getDouble(3)));
+                list.add(new Category(cursor.getString(0),cursor.getInt(1), cursor.getDouble(2)));
             } while (cursor.moveToNext());
             cursor.close();
         }

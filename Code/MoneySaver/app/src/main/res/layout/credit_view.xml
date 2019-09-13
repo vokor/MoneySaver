@@ -12,6 +12,13 @@
         tools:layout_editor_absoluteX="4dp"
         tools:layout_editor_absoluteY="-5dp">
 
+        <TextView
+            android:id="@+id/nameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Название:"
+            android:textSize="20sp" />
+
         <EditText
             android:id="@+id/name"
             android:layout_width="match_parent"
@@ -20,11 +27,25 @@
             android:inputType="text"
             android:textSize="20sp" />
 
+        <TextView
+            android:id="@+id/costTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Требуемая сумма:"
+            android:textSize="20sp" />
+
         <EditText
             android:id="@+id/cost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/notesTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Заметки:"
             android:textSize="20sp" />
 
         <EditText
@@ -39,6 +60,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Накоплено: "
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/savedValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textSize="30sp" />
     </LinearLayout>
 

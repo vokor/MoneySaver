@@ -29,8 +29,9 @@ public class CreditView extends AppCompatActivity {
         final EditText notes = findViewById(R.id.notes);
         notes.setText(credit.getNotes());
         TextView saved = findViewById(R.id.saved);
-        String str = "Накоплено:" + credit.getPayout();
-        saved.setText(str);
+        String str = credit.getPayout().toString();
+        final TextView savedValue = findViewById(R.id.savedValue);
+        savedValue.setText(str);
 
         ok = findViewById(R.id.buttonOk);
         delete = findViewById(R.id.buttonDelete);
