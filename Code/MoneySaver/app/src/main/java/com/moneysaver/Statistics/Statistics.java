@@ -23,6 +23,7 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
+import com.moneysaver.Config;
 import com.moneysaver.R;
 import com.moneysaver.SQLite;
 import com.moneysaver.Settings.Category;
@@ -44,14 +45,19 @@ public class Statistics extends AppCompatActivity implements SeekBar.OnSeekBarCh
 
     private double sum;
 
+    private final int defaultCount = 5;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistics);
 
+        int count = 0;
         categories = SQLite.getCategoryList(getBaseContext(), "Category");
         for (Category category: categories) {
             sum += category.getSpent();
+            if (!(category.getSpent() < Config.EPS))
+                count++;
         }
 
         Shimmer shimmer = new Shimmer();
@@ -60,7 +66,9 @@ public class Statistics extends AppCompatActivity implements SeekBar.OnSeekBarCh
 
         textView = findViewById(R.id.tvXMax);
         seekBar = findViewById(R.id.seekBar);
-        seekBar.setMax(categories.size());
+
+        seekBar.setMax(count);
+
         seekBar.setOnSeekBarChangeListener(this);
 
         chart = findViewById(R.id.chart);
@@ -99,10 +107,10 @@ public class Statistics extends AppCompatActivity implements SeekBar.OnSeekBarCh
         chart.setEntryLabelColor(Color.WHITE);
         chart.setEntryLabelTextSize(12f);
 
-        if (categories.size() > 5)
+        if (count > 5)
             setData(5);
         else
-            setData(categories.size());
+            setData(count);
     }
 
     private void setData(int count) {
@@ -110,8 +118,10 @@ public class Statistics extends AppCompatActivity implements SeekBar.OnSeekBarCh
         seekBar.setProgress(count);
 
         ArrayList<PieEntry> entries = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < categories.size(); i++) {
             Category category = categories.get(i);
+            if (category.getSpent() < Config.EPS)
+                continue;
             entries.add(new PieEntry(getPercent(category),category.getName()));
         }
 
