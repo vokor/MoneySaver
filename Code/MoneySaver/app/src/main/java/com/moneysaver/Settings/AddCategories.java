@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class AddCategories  extends AppCompatActivity implements View.OnClickListener{
     private AdapterCategory adapter;
     private String[] categoryNames;
-    private int balance;
+    private double balance;
     private TextView balanceForCategories;
     private ArrayList<Category> categories;
 
@@ -37,14 +37,14 @@ public class AddCategories  extends AppCompatActivity implements View.OnClickLis
         categories = new ArrayList<>();
         for (String category: categoryNames)
             categories.add(new Category(category, 0, 0));
-        balance = arguments.getInt("balance");
+        balance = arguments.getDouble("balance");
 
         showListView(vListView);
     }
 
     private void showListView(ListView listView){
         balanceForCategories = findViewById(R.id.balanceForCategories);
-        balanceForCategories.setText(Integer.toString(balance));
+        balanceForCategories.setText(Double.toString(balance));
         adapter = new AdapterCategory(categories, balanceForCategories);
         listView.setAdapter(adapter);
     }

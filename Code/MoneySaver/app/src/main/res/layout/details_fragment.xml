@@ -27,18 +27,18 @@
         android:textSize="13pt" />
 
     <TextView
-        android:id="@+id/cost"
+        android:id="@+id/spent"
         android:layout_width="170dp"
         android:layout_height="0dp"
         android:layout_gravity="right"
         android:layout_weight="0.3"
         android:textColor="#f0f0f0"
-        android:textSize="20pt" />
+        android:textSize="17pt" />
 
     <TextView
         android:id="@+id/text_balance"
         android:layout_width="170dp"
-        android:layout_height="67dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:shadowColor="#ff0000"
         android:shadowDx="2"
@@ -53,8 +53,8 @@
         android:layout_width="170dp"
         android:layout_height="5dp"
         android:layout_gravity="right"
-        android:layout_weight="0.3"
+        android:layout_weight="0.4"
         android:textColor="#f0f0f0"
-        android:textSize="20pt" />
+        android:textSize="17pt" />
 
 </LinearLayout>

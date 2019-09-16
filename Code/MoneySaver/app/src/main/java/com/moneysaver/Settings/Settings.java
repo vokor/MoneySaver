@@ -20,6 +20,7 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.moneysaver.Config;
 import com.moneysaver.MainActivity;
 import com.moneysaver.R;
 import com.moneysaver.SQLite;
@@ -43,11 +44,9 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
 
-        ArrayList<String> baseCategories = new ArrayList<>();
-
         autoCompleteTextView = findViewById(R.id.autocomplete);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, baseCategories);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, Config.baseCategories);
         autoCompleteTextView.setAdapter(adapter);
 
         SaveCategories saveCategories = new SaveCategories(getBaseContext());
@@ -91,7 +90,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
             case R.id.addCategories:
                 //First of all we try to check all input symbols and string pattern.
                 String newCategories = autoCompleteTextView.getText().toString();
-                if (newCategories.equals("") || !newCategories.matches("([" + rusSymbols + "_],( )*)*[" + rusSymbols + "_]*"))
+                if (newCategories.equals("") || !newCategories.matches("([" + rusSymbols + "_]*,( )*)*[" + rusSymbols + "_]*"))
                 {
                     String errorMessage = "Не удалось распознать введенные категории. Помните, что название может состоять только из русских букв, цифр и знака _. Используйте запятую для разделения";
                     errorShow(errorMessage, Settings.this);
@@ -124,8 +123,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
     //Check balance which user setted.
     private boolean checkNewBalance() {
-        int type = vFields.getUserBalance();
-        if (type == -2) {
+        double type = vFields.getUserBalance();
+        if (type == -2.0) {
             String errMessage = "Поле Баланс должно содержать неотрицательное число!";
             errorShow(errMessage, Settings.this);
             return false;

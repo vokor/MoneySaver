@@ -1,7 +1,5 @@
 package com.moneysaver.Settings;
 
-import static com.moneysaver.Config.getId;
-
 public class Category {
     private String name;
     private int maxSum;

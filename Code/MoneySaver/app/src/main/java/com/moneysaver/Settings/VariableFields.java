@@ -21,7 +21,7 @@ public class VariableFields {
 
     private EditText editNewBalance;
 
-    private int baseBalance;
+    private double baseBalance;
 
     public VariableFields(EditText eNewBal, TextView tBal, Context context) {
         this.editNewBalance = eNewBal;
@@ -32,32 +32,32 @@ public class VariableFields {
     }
 
     public void recountBalance() {
-        int balance = getUserBalance();
+        double balance = getUserBalance();
         if (balance >= sumCategories) {
             editNewBalance.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
             isNewBalanceCorrect = true;
-            textBalanceWithCateg.setText(Integer.toString(balance - sumCategories));
+            textBalanceWithCateg.setText(Double.toString(balance - sumCategories));
         }
         else
         {
             editNewBalance.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
             isNewBalanceCorrect = false;
-            textBalanceWithCateg.setText(Integer.toString(baseBalance - sumCategories));
+            textBalanceWithCateg.setText(Double.toString(baseBalance - sumCategories));
         }
     }
 
-    public int getUserBalance(){
+    public double getUserBalance(){
         String str = editNewBalance.getText().toString();
         if (str.equals(""))
             return baseBalance;
         try{
             int b = Integer.parseInt(str);
             if (b < 0)
-                return -2;
+                return -2.0;
             else
                 return b;
         }catch(NumberFormatException e){
-            return -2;
+            return -2.0;
         }
     }
 
@@ -66,14 +66,14 @@ public class VariableFields {
         editNewBalance.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event)
             {
-                int newBalance = getUserBalance();
+                double newBalance = getUserBalance();
                 if (newBalance > 0) {
                     if (newBalance < sumCategories) {
                         editNewBalance.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
                         isNewBalanceCorrect = false;
                     }
                     else {
-                        textBalanceWithCateg.setText(Integer.toString(newBalance - sumCategories));
+                        textBalanceWithCateg.setText(Double.toString(newBalance - sumCategories));
                         editNewBalance.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
                         isNewBalanceCorrect = true;
                         return false;
@@ -83,7 +83,7 @@ public class VariableFields {
                     editNewBalance.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
                     isNewBalanceCorrect = false;
                 }
-                textBalanceWithCateg.setText(Integer.toString(baseBalance - sumCategories));
+                textBalanceWithCateg.setText(Double.toString(baseBalance - sumCategories));
                 return false;
             }
         });
@@ -95,10 +95,10 @@ public class VariableFields {
         2) Set value of balance without categories. Simply difference between baseBalance (balance from DTB) and sumCategories
      */
     public void setBalanceWithoutCategories() {
-        int userBalance = getUserBalance();
+        double userBalance = getUserBalance();
         if (userBalance < 0)
             userBalance = baseBalance;
-        textBalanceWithCateg.setText(Integer.toString(userBalance - sumCategories));
+        textBalanceWithCateg.setText(Double.toString(userBalance - sumCategories));
     }
 
     public void setSum(int sum) {

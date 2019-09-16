@@ -5,12 +5,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
 import com.moneysaver.GoalPackge.Goal;
+import com.moneysaver.MainActivity;
 import com.moneysaver.R;
 import com.moneysaver.SQLite;
 
@@ -20,7 +22,6 @@ import static com.moneysaver.Config.dbName;
 
 public class ListCredit extends AppCompatActivity {
     private ListView vListView;
-    private Credit choosenCredit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +35,17 @@ public class ListCredit extends AppCompatActivity {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(ListCredit.this, AddCredit.class);
-                startActivityForResult(i, 2);
+                Intent intent = new Intent(ListCredit.this, AddCredit.class);
+                startActivity(intent);
             }
         };
         button_add.setOnClickListener(listener);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ListCredit.this, MainActivity.class);
+        startActivity(intent);
     }
 
     private void showListView(ArrayList<Credit> list){
@@ -48,49 +55,10 @@ public class ListCredit extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 Credit item = (Credit)a.getItem(position);
-                choosenCredit = item;
                 Intent intent = new Intent(view.getContext(), CreditView.class);
                 intent.putExtra(Credit.class.getSimpleName(), item);
-                startActivityForResult(intent, 1);
+                startActivity(intent);
             }
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case 1: {
-                    String a = data.getStringExtra("activity");
-                    switch (a) {
-                        case "ok":
-                            break;
-                        case "edit": {
-                            //Intent intent = new Intent(ListCredit.this, EditCredit.class);
-                            //intent.putExtra(Credit.class.getSimpleName(), choosenCredit);
-                            //startActivityForResult(intent, 3);
-                            break;
-                        }
-                        case "delete": {
-                            Intent intent = new Intent(ListCredit.this, DeleteCredit.class);
-                            startActivityForResult(intent, 4);
-                            break;
-                        }
-                    }
-                }
-                case 2: {
-                    // создать цель
-                }
-                case 3: {
-                    // edit goal
-                }
-                case 4: {
-                    String b = data.getStringExtra("button");
-                    if(b.equals("delete")){
-                        // delete goal
-                    }
-                }
-            }
-        }
     }
 }

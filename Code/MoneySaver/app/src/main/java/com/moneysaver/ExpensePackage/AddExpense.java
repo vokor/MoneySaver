@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.moneysaver.MainActivity;
 import com.moneysaver.R;
 import com.moneysaver.SQLite;
 import com.moneysaver.Settings.Category;
@@ -71,14 +72,17 @@ public class AddExpense extends AppCompatActivity {
                 if (!checkInfo(dateStr, categoryStr, costStr)) {
                     return;
                 }
-                Intent i = new Intent();
+                Expense expense = null;
                 try {
-                    i.putExtra("value", new Expense(nameStr, costStr, format.parse(dateStr), categoryStr, notesStr));
+                    expense = new Expense(nameStr, costStr, format.parse(dateStr), categoryStr, notesStr);
                 } catch (Exception e) {
                     return;
                 }
-                setResult(RESULT_OK, i);
-                finish();
+                SQLite.AddExpense(AddExpense.this, expense);
+                SQLite.updateCategory(AddExpense.this, expense);
+                SQLite.updateBalance(AddExpense.this, expense.getCost(), 2);
+                Intent intent = new Intent(AddExpense.this, ListExpense.class);
+                startActivity(intent);
             }
         };
         createButton.setOnClickListener(listenerCreate);
@@ -119,7 +123,8 @@ public class AddExpense extends AppCompatActivity {
             if (name.equals(category.getName())) {
                 if (category.getBalance() < cost) {
                     String err = "Остаток по категории '" + category.getName() + "'" + "составляет: " + category.getBalance() + ". Вы должны указать меньшую сумму";
-                    Settings.errorShow(err, getBaseContext());
+                    Settings.errorShow(err, AddExpense.this);
+                    return false;
                 } else
                     return true;
             }
