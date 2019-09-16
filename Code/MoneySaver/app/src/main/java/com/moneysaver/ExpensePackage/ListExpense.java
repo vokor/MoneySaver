@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.moneysaver.GoalPackge.DeleteGoal;
+import com.moneysaver.MainActivity;
 import com.moneysaver.R;
 import com.moneysaver.SQLite;
 
@@ -31,8 +32,8 @@ public class ListExpense extends AppCompatActivity {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(ListExpense.this, AddExpense.class);
-                startActivityForResult(i, 2);
+                Intent intent = new Intent(ListExpense.this, AddExpense.class);
+                startActivity(intent);
             }
         };
         button_add.setOnClickListener(listener);
@@ -49,52 +50,14 @@ public class ListExpense extends AppCompatActivity {
                 choosenExpense = item;
                 Intent intent = new Intent(view.getContext(), ExpenseView.class);
                 intent.putExtra(Expense.class.getSimpleName(), item);
-                startActivityForResult(intent, 1);
+                startActivity(intent);
             }
         });
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case 1: {
-                    String b = data.getStringExtra("button");
-                    switch (b) {
-                        case "ok":
-                            break;
-                        case "edit": {
-                            Intent intent = new Intent(ListExpense.this, EditExpense.class);
-                            intent.putExtra(Expense.class.getSimpleName(), choosenExpense);
-                            startActivityForResult(intent, 3);
-                            break;
-                        }
-                        case "delete": {
-                            Intent intent = new Intent(ListExpense.this, DeleteGoal.class);
-                            startActivityForResult(intent, 4);
-                            break;
-                        }
-                    }
-                }
-                case 2: {
-                    Bundle arguments = data.getExtras();
-                    Expense expense = (Expense)arguments.getSerializable("value");
-                    SQLite.AddExpense(getBaseContext(), expense);
-                    SQLite.updateCategory(getBaseContext(), expense);
-                    break;
-                }
-                case 3: {
-                    // edit goal
-                    break;
-                }
-                case 4: {
-                    String b = data.getStringExtra("button");
-                    if(b.equals("delete")){
-                        // delete goal
-                    }
-                    break;
-                }
-            }
-        }
+    public void onBackPressed() {
+        Intent intent = new Intent(ListExpense.this, MainActivity.class);
+        startActivity(intent);
     }
 }

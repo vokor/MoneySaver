@@ -29,6 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:maxLength="10"
             android:inputType="textPersonName" />
 
         <TextView
@@ -42,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:maxLength="6"
             android:inputType="numberDecimal" />
 
         <TextView
@@ -55,6 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:maxLines="6"
             android:gravity="start|top"
             android:inputType="textMultiLine" />
 

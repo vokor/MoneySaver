@@ -15,11 +15,11 @@ public class Credit implements Serializable {
         this.notes = notes;
     }
 
-    public Credit(String name, double allSum, double payout) {
+    public Credit(String name, double allSum, String notes) {
         this.name = name;
         this.allSum = allSum;
-        this.payout = payout;
-        this.notes = "";
+        this.payout = 0;
+        this.notes = notes;
     }
 
     public String getName() {

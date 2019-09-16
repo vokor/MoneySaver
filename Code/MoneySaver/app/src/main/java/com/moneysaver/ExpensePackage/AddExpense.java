@@ -81,7 +81,7 @@ public class AddExpense extends AppCompatActivity {
                 SQLite.AddExpense(AddExpense.this, expense);
                 SQLite.updateCategory(AddExpense.this, expense);
                 SQLite.updateBalance(AddExpense.this, expense.getCost(), 2);
-                Intent intent = new Intent(AddExpense.this, MainActivity.class);
+                Intent intent = new Intent(AddExpense.this, ListExpense.class);
                 startActivity(intent);
             }
         };
