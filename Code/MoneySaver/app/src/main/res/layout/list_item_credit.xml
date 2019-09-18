@@ -11,12 +11,14 @@
         android:id="@+id/item_name"
         android:layout_width="235dp"
         android:layout_height="wrap_content"
+        android:maxLines="4"
         android:textSize="18sp" />
 
     <TextView
         android:id="@+id/item_cost"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:maxLines="4"
         android:textSize="18sp" />
 
 </LinearLayout>
