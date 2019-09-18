@@ -21,32 +21,29 @@ import com.moneysaver.Settings.Settings;
 import java.text.SimpleDateFormat;
 
 public class ExpenseView extends AppCompatActivity {
-    private Button ok;
-    private Button delete;
-    public static final SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.expense_view);
-        final Expense expense = (Expense) getIntent().getSerializableExtra(Expense.class.getSimpleName());
-        final TextView name = findViewById(R.id.name);
+        Expense expense = (Expense) getIntent().getSerializableExtra(Expense.class.getSimpleName());
+        TextView name = findViewById(R.id.name);
         name.setText(expense.getName());
-        final TextView cost = findViewById(R.id.cost);
+        TextView cost = findViewById(R.id.cost);
         cost.setText(String.valueOf(expense.getCost()));
-        final TextView notes = findViewById(R.id.notes);
+        TextView notes = findViewById(R.id.notes);
         notes.setText(expense.getNotes());
-        final TextView date = findViewById(R.id.date);
-        final Spinner category = findViewById(R.id.categoryExpenseSpinnerAdd);
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, SQLite.getCategoryNames(getBaseContext(), "Category"));
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        category.setAdapter(adapter);
-        category.setSelection(getIndex(category, expense.getCategory()));
+        TextView date = findViewById(R.id.date);
+        date.setText(expense.getDate());
+        TextView category = findViewById(R.id.category);
+        category.setText(expense.getCategory());
+        TextView notesView = findViewById(R.id.notesTextView);
+        if(notes.getText().toString().isEmpty()){
+            notesView.setVisibility(View.INVISIBLE);
+        }
 
-
-        ok = findViewById(R.id.buttonOk);
-        delete = findViewById(R.id.buttonDelete);
+        Button ok = findViewById(R.id.buttonOk);
+        Button delete = findViewById(R.id.buttonDelete);
 
         View.OnClickListener listenerDelete = new View.OnClickListener() {
             @Override
@@ -69,14 +66,5 @@ public class ExpenseView extends AppCompatActivity {
             }
         };
         ok.setOnClickListener(listenerOk);
-    }
-
-    private int getIndex(Spinner spinner, String myString){
-        for (int i=0;i<spinner.getCount();i++){
-            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
-                return i;
-            }
-        }
-        return 0;
     }
 }

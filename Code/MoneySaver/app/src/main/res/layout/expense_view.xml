@@ -13,20 +13,13 @@
         tools:layout_editor_absoluteY="-5dp">
 
         <TextView
-            android:id="@+id/nameTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Название:"
-            android:textSize="20sp" />
-
-        <TextView
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:inputType="text"
             android:maxLength="10"
-            android:textSize="20sp" />
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/costTextView"
@@ -54,8 +47,7 @@
             android:id="@+id/date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="date"
-            android:maxLength="6"
+            android:maxLength="10"
             android:textSize="20sp" />
 
         <TextView
@@ -65,8 +57,9 @@
             android:text="Категория:"
             android:textSize="20sp" />
 
-        <Spinner
-            android:id="@+id/categoryExpenseSpinner"
+        <TextView
+            android:id="@+id/category"
+            android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
