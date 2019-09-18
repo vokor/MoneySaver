@@ -9,7 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.moneysaver.ExpensePackage.AddExpense;
+import com.moneysaver.ExpensePackage.ListExpense;
 import com.moneysaver.R;
+import com.moneysaver.SQLite;
 
 public class AddGoal extends AppCompatActivity {
     EditText name;
@@ -73,15 +76,11 @@ public class AddGoal extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String nameStr = name.getText().toString();
-                String costStr = cost.getText().toString();
+                double newCost = Double.parseDouble(cost.getText().toString());
                 String notesStr = notes.getText().toString();
-
-                Intent i = new Intent();
-                i.putExtra("name", nameStr);
-                i.putExtra("cost", costStr);
-                i.putExtra("notes", notesStr);
-                setResult(2, i);
-                finish();
+                SQLite.addGoal(AddGoal.this, new Goal(nameStr, newCost, 0, notesStr));
+                Intent intent = new Intent(AddGoal.this, ListGoal.class);
+                startActivity(intent);
             }
         };
         createButton.setOnClickListener(listenerCreate);

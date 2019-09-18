@@ -10,6 +10,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.moneysaver.CreditPackage.ListCredit;
+import com.moneysaver.MainActivity;
 import com.moneysaver.R;
 import com.moneysaver.SQLite;
 
@@ -53,6 +55,12 @@ public class ListGoal extends AppCompatActivity {
                 startActivityForResult(intent, 1);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ListGoal.this, MainActivity.class);
+        startActivity(intent);
     }
 
     @Override
