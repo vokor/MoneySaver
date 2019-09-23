@@ -46,6 +46,10 @@
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:label="Настройки"
             />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
