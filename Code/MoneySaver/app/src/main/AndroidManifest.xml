@@ -29,6 +29,7 @@
         <activity android:name=".Statistics.Statistics" />
         <activity android:name=".GoalPackge.ListGoal" />
         <activity android:name=".CreditPackage.ListCredit" />
+        <activity android:name=".SaveMoney" />
         <activity android:name=".CreditPackage.DeleteCredit" />
         <activity android:name=".CreditPackage.AddCredit" />
         <activity android:name=".CreditPackage.CreditView" />

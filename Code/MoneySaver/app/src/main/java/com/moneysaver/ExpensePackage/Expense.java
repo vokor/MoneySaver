@@ -24,6 +24,15 @@ public class Expense implements Serializable {
         id = Config.getId();
     }
 
+    public Expense(String name, double cost, Date date, String category, String notes, int id){
+        this.name = name;
+        this.cost = cost;
+        this.category = category;
+        this.date = date;
+        this.notes = notes;
+        this.id = id;
+    }
+
     public int getId() {return id;}
 
     public String getName(){

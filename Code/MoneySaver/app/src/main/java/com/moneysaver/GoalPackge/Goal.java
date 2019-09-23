@@ -19,8 +19,8 @@ public class Goal implements Serializable {
         this.notes = notes;
     }
 
-    public Goal(String name, double cost, double saved) {
-        id = Config.getId();
+    public Goal(String name, double cost, double saved, String notes, int id) {
+        this.id = id;
         this.name = name;
         this.cost = cost;
         this.saved = saved;

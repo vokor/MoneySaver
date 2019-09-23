@@ -15,14 +15,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.moneysaver.Config;
 import com.moneysaver.R;
 import com.moneysaver.SQLite;
+import com.moneysaver.SaveMoney;
 
 import java.util.ArrayList;
 
 public class CreditView extends AppCompatActivity {
     private Button ok;
     private Button delete;
+    private Button save;
 
     private ArrayList<Credit> credits;
     private Credit credit;
@@ -30,7 +33,7 @@ public class CreditView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.credit_view);
+        setContentView(R.layout.item_info_view);
         credit = (Credit) getIntent().getSerializableExtra(Credit.class.getSimpleName());
         final EditText name = findViewById(R.id.name);
         name.setText(credit.getName());
@@ -44,6 +47,7 @@ public class CreditView extends AppCompatActivity {
 
         ok = findViewById(R.id.buttonOk);
         delete = findViewById(R.id.buttonDelete);
+        save = findViewById(R.id.buttonSave);
 
         credits = SQLite.getCreditList(this);
         name.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
@@ -60,9 +64,21 @@ public class CreditView extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if ((!cost.getText().toString().equals("")) && (!name.getText().toString().equals(""))) {
-                    ok.setEnabled(true);
-                } else {
+                try {
+                    if (cost.getText().toString().equals("") ||
+                            Double.parseDouble(cost.getText().toString()) - credit.getPayout() < Config.EPS) {
+                        cost.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+                        ok.setEnabled(false);
+                    } else {
+                        cost.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
+                        if (!name.getText().toString().equals("")) {
+                            ok.setEnabled(true);
+                        } else {
+                            ok.setEnabled(false);
+                        }
+                    }
+                } catch (Exception e) {
+                    cost.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
                     ok.setEnabled(false);
                 }
             }
@@ -80,12 +96,16 @@ public class CreditView extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if ((!cost.getText().toString().equals("")) && checkName(name.getText().toString())) {
-                    ok.setEnabled(true);
-                    name.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
-                } else {
-                    ok.setEnabled(false);
+                if (!checkName(name.getText().toString())) {
                     name.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+                    ok.setEnabled(false);
+                } else {
+                    name.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
+                    if (!cost.getText().toString().equals("")) {
+                        ok.setEnabled(true);
+                    } else {
+                        ok.setEnabled(false);
+                    }
                 }
             }
         });
@@ -108,6 +128,16 @@ public class CreditView extends AppCompatActivity {
             }
         };
         ok.setOnClickListener(listenerOk);
+
+        View.OnClickListener saveMoney = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CreditView.this, SaveMoney.class);
+                intent.putExtra("Credit", credit);
+                startActivity(intent);
+            }
+        };
+        save.setOnClickListener(saveMoney);
     }
 
     private boolean checkName(String name) {

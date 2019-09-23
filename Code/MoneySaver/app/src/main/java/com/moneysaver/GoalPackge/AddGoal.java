@@ -1,6 +1,8 @@
 package com.moneysaver.GoalPackge;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -30,6 +32,9 @@ public class AddGoal extends AppCompatActivity {
         notes = findViewById(R.id.notesGoalEdit);
         createButton = findViewById(R.id.createGoalButton);
 
+        name.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+        cost.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+
         createButton.setEnabled(false);
 
         cost.addTextChangedListener(new TextWatcher() {
@@ -44,10 +49,15 @@ public class AddGoal extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if ((!cost.getText().toString().equals("")) && (!name.getText().toString().equals(""))) {
-                    createButton.setEnabled(true);
+                if ((!cost.getText().toString().equals(""))) {
+                    cost.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
+                    if (!name.getText().toString().equals("")) {
+                        createButton.setEnabled(true);
+                    } else {
+                        createButton.setEnabled(false);
+                    }
                 } else {
-                    createButton.setEnabled(false);
+                    cost.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
                 }
             }
         });
@@ -64,10 +74,12 @@ public class AddGoal extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if ((!cost.getText().toString().equals("")) && (!name.getText().toString().equals(""))) {
+                if (!name.getText().toString().equals("")) {
                     createButton.setEnabled(true);
+                    name.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
                 } else {
                     createButton.setEnabled(false);
+                    name.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
                 }
             }
         });

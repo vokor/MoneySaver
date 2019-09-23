@@ -152,7 +152,7 @@ public class Statistics extends AppCompatActivity implements SeekBar.OnSeekBarCh
         PieData data = new PieData(dataSet);
         data.setValueFormatter(new PercentFormatter(chart));
         data.setValueTextSize(11f);
-        data.setValueTextColor(Color.WHITE);
+        data.setValueTextColor(Color.BLACK);
         chart.setData(data);
         chart.highlightValues(null);
 

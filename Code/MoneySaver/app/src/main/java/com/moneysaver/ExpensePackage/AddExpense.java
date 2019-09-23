@@ -116,13 +116,13 @@ public class AddExpense extends AppCompatActivity {
             format.parse(date);
         } catch (Exception e) {
             String err = "Недопустимый формат даты. Дата оформляется по шаблону: 'dd.MM.yyyy'";
-            Settings.errorShow(err, getBaseContext());
+            Settings.errorShow(err, AddExpense.this);
             return false;
         }
         for (Category category: SQLite.getCategoryList(getBaseContext(), "Category")) {
             if (name.equals(category.getName())) {
                 if (category.getBalance() < cost) {
-                    String err = "Остаток по категории '" + category.getName() + "'" + "составляет: " + category.getBalance() + ". Вы должны указать меньшую сумму";
+                    String err = "Остаток по категории '" + category.getName() + "'" + " составляет: " + category.getBalance() + ". Вы должны указать меньшую сумму";
                     Settings.errorShow(err, AddExpense.this);
                     return false;
                 } else
