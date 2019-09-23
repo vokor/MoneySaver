@@ -103,11 +103,13 @@ class SettingsAdapter extends ArrayAdapter<Category> {
             Category category = container.getCommonCategories().get(position);
             if (category.changed) {
                 change.b.setText("Изменено");
-                change.b.setBackgroundColor(Color.parseColor("#008000"));
+                change.b.setBackgroundColor(Color.parseColor("#3b6b87"));
+                change.b.setTextSize(13);
             }
             else {
                 change.b.setText("Изменить");
-                change.b.setBackgroundColor(Color.parseColor("#0000FF"));
+                change.b.setBackgroundColor(Color.parseColor("#359bd7"));
+                change.b.setTextSize(13);
             }
         }
 
@@ -116,12 +118,17 @@ class SettingsAdapter extends ArrayAdapter<Category> {
             if (!category.deleted) {
                 delete.b.setText("Удалить");
                 change.b.setEnabled(true);
-                delete.b.setBackgroundColor(Color.parseColor("#0000FF"));
+                delete.b.setEnabled(true);
+                delete.b.setBackgroundColor(Color.parseColor("#359bd7"));
+                delete.b.setTextSize(13);
             }
             else {
                 delete.b.setText("Удалено");
                 change.b.setEnabled(false);
-                delete.b.setBackgroundColor(Color.parseColor("#FF0000"));
+                delete.b.setEnabled(false);
+                delete.b.setBackgroundColor(Color.parseColor("#3b6b87"));
+                change.b.setBackgroundColor(Color.parseColor("#3b6b87"));
+                delete.b.setTextSize(13);
             }
         }
     }
