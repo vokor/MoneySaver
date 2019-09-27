@@ -59,14 +59,14 @@
                 class="com.moneysaver.MainFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.45" />
+                android:layout_weight="0.53" />
 
             <fragment
                 android:id="@+id/detailsfragment"
                 class="com.moneysaver.DetailsFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.45" />
+                android:layout_weight="0.37" />
         </LinearLayout>
 
     </LinearLayout>

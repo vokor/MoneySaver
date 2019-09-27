@@ -33,6 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
+            android:background="@drawable/corners2"
             android:layout_weight="1"
             android:textAllCaps="false" />
 
@@ -40,6 +41,7 @@
             android:id="@+id/circularButton2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/corners2"
             android:layout_marginLeft="2dp"
             android:layout_weight="1"
             android:textAllCaps="false" />

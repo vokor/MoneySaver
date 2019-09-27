@@ -108,7 +108,7 @@ class SettingsAdapter extends ArrayAdapter<Category> {
             }
             else {
                 change.b.setText("Изменить");
-                change.b.setBackgroundColor(Color.parseColor("#359bd7"));
+                //change.b.setBackgroundColor(Color.parseColor("#359bd7"));
                 change.b.setTextSize(13);
             }
         }
@@ -119,7 +119,7 @@ class SettingsAdapter extends ArrayAdapter<Category> {
                 delete.b.setText("Удалить");
                 change.b.setEnabled(true);
                 delete.b.setEnabled(true);
-                delete.b.setBackgroundColor(Color.parseColor("#359bd7"));
+                //delete.b.setBackgroundColor(Color.parseColor("#359bd7"));
                 delete.b.setTextSize(13);
             }
             else {
