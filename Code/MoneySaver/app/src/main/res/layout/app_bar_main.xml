@@ -27,8 +27,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        android:background="@color/colorBlue"
+        android:backgroundTint="@color/colorBlue"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@drawable/plus_black" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -42,8 +44,8 @@
             android:layout_width="match_parent"
             android:layout_height="93dp"
             android:paddingTop="52dp"
-            android:background="#FFD700"
-            android:textColor="#DC143C"
+            android:background="@color/colorBlue"
+            android:textColor="#000000"
             android:textStyle="bold">
             android:weightSum="0.1"</TextView>
 

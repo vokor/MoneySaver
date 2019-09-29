@@ -20,6 +20,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textColor="#000000"
                 android:text="Оставшийся баланс:  " />
 
             <TextView
@@ -43,6 +44,7 @@
             android:id="@+id/newBalance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColorHighlight="@color/colorBlueDark"
             android:ems="10"
             android:inputType="number"
             android:maxLength="6" />
@@ -62,6 +64,7 @@
             android:layout_height="wrap_content"
             android:completionHint="Названия категорий через запятую"
             android:completionThreshold="1"
+            android:textColorHighlight="@color/colorBlueDark"
             android:lines="2" />
 
         <Button

@@ -6,6 +6,81 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:layout_width="403dp"
+        android:layout_height="640dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="4dp"
+        tools:layout_editor_absoluteY="-5dp">
+
+        <TextView
+            android:id="@+id/nameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlueDark"
+            android:text="Название:"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="text"
+            android:maxLength="10"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/costTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlueDark"
+            android:text="Требуемая сумма:"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/cost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:maxLength="6"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/notesTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlueDark"
+            android:text="Заметки:"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:maxLines="6"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/saved"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlueDark"
+            android:text="Накоплено: "
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/savedValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -14,63 +89,53 @@
         <Button
             android:id="@+id/buttonSave"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="42dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10sp"
+            android:background="@drawable/corners"
+            app:fontFamily="@font/roboto"
+            android:textAllCaps="false"
+            android:textColor="@color/colorBlueDark"
+            android:textSize="18sp"
             android:text="Отложить средства" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="62dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/buttonOk"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="42dp"
                 android:layout_weight="1"
-                android:text="ок" />
-
-            <Button
-                android:id="@+id/buttonEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="редактировать" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="10sp"
+                android:background="@drawable/corners"
+                app:fontFamily="@font/roboto"
+                android:textAllCaps="false"
+                android:textColor="@color/colorBlueDark"
+                android:textSize="18sp"
+                android:text="Ок"  />
 
             <Button
                 android:id="@+id/buttonDelete"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="42dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10sp"
+                android:background="@drawable/corners"
+                app:fontFamily="@font/roboto"
+                android:textAllCaps="false"
+                android:textColor="@color/colorBlueDark"
+                android:textSize="18sp"
                 android:layout_weight="1"
-                android:text="удалить" />
+                android:text="Удалить" />
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="403dp"
-        android:layout_height="589dp"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="4dp"
-        tools:layout_editor_absoluteY="-5dp">
-
-        <TextView
-            android:id="@+id/textViewName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/textViewCost"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/textViewNotes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp" />
     </LinearLayout>
 
 </FrameLayout>

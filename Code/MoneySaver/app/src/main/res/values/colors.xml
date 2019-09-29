@@ -5,6 +5,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#245084</color>
     <color name="colorBlueDark">#245084</color>
+    <color name="colorBackground">#d6e9ff</color>
     <color name="colorBlue">#359bd7</color>
     <color name="colorBlueLight">#9eccf4</color>
     <color name="colorWhite">#FFFFFF</color>
