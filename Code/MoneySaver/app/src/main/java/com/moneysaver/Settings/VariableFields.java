@@ -28,6 +28,7 @@ public class VariableFields {
         this.textBalanceWithCateg = tBal;
         this.isNewBalanceCorrect = true;
         this.baseBalance = SQLite.getBalance(context);
+        recountBalance();
         setListenerOnNewBalance();
     }
 
