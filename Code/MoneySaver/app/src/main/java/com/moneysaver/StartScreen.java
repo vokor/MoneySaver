@@ -31,10 +31,4 @@ public class StartScreen extends AppCompatActivity {
     private void initialiseDataBase() {
         SQLite.initialiseDataBase(getBaseContext());
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // TODO: delete dataBase
-    }
 }
