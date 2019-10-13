@@ -1,73 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="403dp"
-        android:layout_height="681dp"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="4dp"
-        tools:layout_editor_absoluteY="-5dp">
+<LinearLayout
+    android:layout_width="403dp"
+    android:layout_height="655dp"
+    android:orientation="vertical"
+    tools:layout_editor_absoluteX="4dp"
+    tools:layout_editor_absoluteY="-5dp">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:text="Добавление кредита" />
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:text="Добавление кредита" />
 
-        <TextView
-            android:id="@+id/nameCreditView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Название" />
+    <TextView
+        android:id="@+id/nameCreditView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Название" />
 
-        <EditText
-            android:id="@+id/nameCreditEdit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:maxLength="10"
-            android:inputType="textPersonName" />
+    <EditText
+        android:id="@+id/nameCreditEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:maxLength="10" />
 
-        <TextView
-            android:id="@+id/costCreditView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Нужная сумма" />
+    <TextView
+        android:id="@+id/costCreditView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Нужная сумма" />
 
-        <EditText
-            android:id="@+id/costCreditEdit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:maxLength="6"
-            android:inputType="numberDecimal" />
+    <EditText
+        android:id="@+id/costCreditEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:maxLength="6" />
 
-        <TextView
-            android:id="@+id/notesCreditView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Заметки" />
+    <TextView
+        android:id="@+id/notesCreditView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Заметки" />
 
-        <EditText
-            android:id="@+id/notesCreditEdit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:maxLines="6"
-            android:gravity="start|top"
-            android:inputType="textMultiLine" />
+    <EditText
+        android:id="@+id/notesCreditEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:maxLines="6" />
 
-    </LinearLayout>
+</LinearLayout>
 
     <Button
         android:id="@+id/createCreditButton"
-        android:layout_gravity="bottom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="добавить"
-        />
+        android:layout_height="42dp"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/corners"
+        android:text="Добавить"
+        android:textAllCaps="false"
+        android:textColor="@color/colorBlueDark"
+        android:textSize="18sp"
+        app:fontFamily="@font/roboto" />
 </FrameLayout>

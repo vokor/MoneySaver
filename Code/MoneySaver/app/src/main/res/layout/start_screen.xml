@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -12,23 +13,35 @@
 
         <TextView
             android:id="@+id/textView3"
-            android:layout_width="wrap_content"
+            android:layout_width="374dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="Добро пожаловать в MoneySaver!"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/colorBlueDark"
+            android:textSize="26sp"
+            app:fontFamily="@font/roboto" />
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="312dp"
+            android:layout_height="293dp"
+            android:paddingTop="20sp"
+            android:paddingBottom="20sp"
+            app:srcCompat="@drawable/ic_money_finance_cash_payment_icon_124734" />
 
         <Button
             android:id="@+id/button"
-            android:layout_width="245dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginLeft="55dp"
+            android:layout_marginRight="55dp"
+            android:background="@drawable/corners"
             android:text="Начать!"
+            android:textAllCaps="false"
+            android:textColor="@color/colorBlueDark"
+            android:textSize="24sp"
+            app:fontFamily="@font/roboto"
             tools:layout_editor_absoluteX="116dp"
             tools:layout_editor_absoluteY="416dp" />
 

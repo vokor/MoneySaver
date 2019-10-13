@@ -11,11 +11,11 @@
 
     <com.romainpiel.shimmer.ShimmerTextView
         android:id="@+id/shimmer"
-        android:text="Мои траты"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#4bec13"
-        android:textSize="30sp"/>
+        android:text="Мои траты"
+        android:textColor="@color/colorBlueDark"
+        android:textSize="26sp" />
 
     <SeekBar
         android:id="@+id/seekBar"

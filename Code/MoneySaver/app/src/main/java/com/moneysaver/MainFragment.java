@@ -43,6 +43,6 @@ public class MainFragment extends ListFragment {
         // заменяем текст в другом фрагменте по нажатию на элемент списка
         DetailsFragment detailsFragment = (DetailsFragment) getFragmentManager().findFragmentById(R.id.detailsfragment);
         detailsFragment.change(cost.get(position), spent.get(position));
-        getListView().setSelector(android.R.color.holo_blue_bright);
+        getListView().setSelector(R.color.colorBackground);
     }
 }

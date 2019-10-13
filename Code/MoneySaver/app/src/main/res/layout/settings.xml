@@ -6,8 +6,8 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="403dp"
-        android:layout_height="681dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="4dp"
         tools:layout_editor_absoluteY="-5dp">
@@ -20,35 +20,43 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textColor="#000000"
                 android:text="Оставшийся баланс:  " />
 
             <TextView
                 android:id="@+id/balanceWithoutCategoties"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="13sp"
-                android:textColor="#DC143C"/>
+                android:textColor="#DC143C"
+                android:textSize="13sp" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/changeBalance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text= "Баланс на месяц" />
+            android:textStyle="bold"
+            android:textColor="@color/colorBlueDark"
+            android:textSize="20sp"
+            android:text="Баланс на месяц" />
 
         <EditText
             android:id="@+id/newBalance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColorHighlight="@color/colorBlueDark"
             android:ems="10"
-            android:maxLength="6"
-            android:inputType="number" />
+            android:inputType="number"
+            android:maxLength="6" />
 
         <TextView
             android:id="@+id/changeCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text= "Новые категории" />
+            android:textStyle="bold"
+            android:textColor="@color/colorBlueDark"
+            android:textSize="20sp"
+            android:text="Новые категории" />
 
         <MultiAutoCompleteTextView
             android:id="@+id/autocomplete"
@@ -56,25 +64,36 @@
             android:layout_height="wrap_content"
             android:completionHint="Названия категорий через запятую"
             android:completionThreshold="1"
+            android:textColorHighlight="@color/colorBlueDark"
             android:lines="2" />
 
         <Button
             android:id="@+id/addCategories"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="42dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10sp"
+            android:background="@drawable/corners"
             android:text="Добавить"
-            />
+            android:textAllCaps="false"
+            android:textColor="@color/colorBlueDark"
+            android:textSize="18sp"
+            app:fontFamily="@font/roboto" />
 
         <TextView
             android:id="@+id/myCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text= "Мои категории" />
+            android:textStyle="bold"
+            android:textColor="@color/colorBlueDark"
+            android:textSize="20sp"
+            android:text="Мои категории" />
 
         <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/scroll"
             android:layout_width="wrap_content"
-            android:layout_height="250dp">
+            android:layout_height="220dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -84,26 +103,45 @@
                 <ListView
                     android:id="@+id/categoryList"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp" />
+                    android:layout_height="220dp" />
             </LinearLayout>
         </ScrollView>
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/saveChanges"
-                android:layout_width="196dp"
-                android:layout_height="wrap_content"
-                android:text="Сохранить" />
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/corners"
+                android:text="Сохранить"
+                android:textAllCaps="false"
+                android:textColor="@color/colorBlueDark"
+                android:textSize="18sp"
+                app:fontFamily="@font/roboto" />
 
             <Button
                 android:id="@+id/abortChanges"
-                android:layout_width="162dp"
-                android:layout_height="wrap_content"
-                android:text="Отмена" />
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/corners"
+                android:text="Отмена"
+                android:textAllCaps="false"
+                android:textColor="@color/colorBlueDark"
+                android:textSize="18sp"
+                app:fontFamily="@font/roboto" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>
