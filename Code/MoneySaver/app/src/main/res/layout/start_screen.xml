@@ -26,9 +26,9 @@
             android:id="@+id/imageView5"
             android:layout_width="312dp"
             android:layout_height="293dp"
-            android:paddingBottom="20sp"
             android:paddingTop="20sp"
-            app:srcCompat="@drawable/money_finance_cash_payment_icon_124734" />
+            android:paddingBottom="20sp"
+            app:srcCompat="@drawable/ic_money_finance_cash_payment_icon_124734" />
 
         <Button
             android:id="@+id/button"
