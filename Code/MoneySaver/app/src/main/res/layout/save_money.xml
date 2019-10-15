@@ -13,18 +13,29 @@
         tools:layout_editor_absoluteY="-5dp">
 
         <TextView
+            android:id="@+id/nameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlueDark"
+            android:text="Название:"
+            android:textSize="20sp" />
+
+        <TextView
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:inputType="text"
-            android:maxLength="16"
-            android:textSize="24sp" />
+            android:maxLength="10"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/costTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlueDark"
             android:text="Стоимость:"
             android:textSize="20sp" />
 
@@ -33,13 +44,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
-            android:maxLength="106"
+            android:maxLength="6"
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/savedTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlueDark"
             android:text="Накоплено:"
             android:textSize="20sp" />
 
@@ -55,6 +68,8 @@
             android:id="@+id/saveTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlueDark"
             android:text="Отложить:"
             android:textSize="20sp" />
 
@@ -67,12 +82,20 @@
             android:textSize="20sp" />
     </LinearLayout>
 
-        <Button
-            android:id="@+id/buttonOk"
-            android:layout_gravity="bottom"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ок" />
+    <Button
+        android:id="@+id/buttonOk"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/corners"
+        app:fontFamily="@font/roboto"
+        android:textAllCaps="false"
+        android:textColor="@color/colorBlueDark"
+        android:textSize="18sp"
+        android:text="ок" />
 
 </FrameLayout>
