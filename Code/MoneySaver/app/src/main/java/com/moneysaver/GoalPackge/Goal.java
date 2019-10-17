@@ -1,21 +1,26 @@
 package com.moneysaver.GoalPackge;
 
+import com.moneysaver.Config;
+
 import java.io.Serializable;
 
 public class Goal implements Serializable {
+    private int id;
     private String name;
     private double cost;
     private double saved;
     private String notes;
 
     public Goal(String name, double cost, double saved, String notes) {
+        id = Config.getId();
         this.name = name;
         this.cost = cost;
         this.saved = saved;
         this.notes = notes;
     }
 
-    public Goal(String name, double cost, double saved) {
+    public Goal(String name, double cost, double saved, String notes, int id) {
+        this.id = id;
         this.name = name;
         this.cost = cost;
         this.saved = saved;
@@ -37,6 +42,8 @@ public class Goal implements Serializable {
     public Double getSaved() {
         return saved;
     }
+
+    public int getId() { return id;}
 
     public void setName(String name) {
         this.name = name;

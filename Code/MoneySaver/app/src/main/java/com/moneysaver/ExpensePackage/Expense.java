@@ -1,5 +1,7 @@
 package com.moneysaver.ExpensePackage;
 
+import com.moneysaver.Config;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,6 +13,7 @@ public class Expense implements Serializable {
     private String notes;
     private String category;
     private Date date;
+    private int id;
 
     public Expense(String name, double cost, Date date, String category, String notes){
         this.name = name;
@@ -18,7 +21,19 @@ public class Expense implements Serializable {
         this.category = category;
         this.date = date;
         this.notes = notes;
+        id = Config.getId();
     }
+
+    public Expense(String name, double cost, Date date, String category, String notes, int id){
+        this.name = name;
+        this.cost = cost;
+        this.category = category;
+        this.date = date;
+        this.notes = notes;
+        this.id = id;
+    }
+
+    public int getId() {return id;}
 
     public String getName(){
         return name;

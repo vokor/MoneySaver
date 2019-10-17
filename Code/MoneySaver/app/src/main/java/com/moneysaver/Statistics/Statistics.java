@@ -116,13 +116,14 @@ public class Statistics extends AppCompatActivity implements SeekBar.OnSeekBarCh
     private void setData(int count) {
         textView.setText(Integer.toString(count));
         seekBar.setProgress(count);
-
+        int counter = 0;
         ArrayList<PieEntry> entries = new ArrayList<>();
-        for (int i = 0; i < categories.size(); i++) {
+        for (int i = 0; i < categories.size() && counter < count; i++) {
             Category category = categories.get(i);
             if (category.getSpent() < Config.EPS)
                 continue;
             entries.add(new PieEntry(getPercent(category),category.getName()));
+            counter++;
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "Категории");
@@ -151,7 +152,7 @@ public class Statistics extends AppCompatActivity implements SeekBar.OnSeekBarCh
         PieData data = new PieData(dataSet);
         data.setValueFormatter(new PercentFormatter(chart));
         data.setValueTextSize(11f);
-        data.setValueTextColor(Color.WHITE);
+        data.setValueTextColor(Color.BLACK);
         chart.setData(data);
         chart.highlightValues(null);
 

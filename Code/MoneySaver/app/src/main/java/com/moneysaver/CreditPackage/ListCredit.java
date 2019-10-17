@@ -28,7 +28,7 @@ public class ListCredit extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_credit);
         vListView = findViewById(R.id.creditlist_view);
-        showListView(SQLite.getCreditList(getBaseContext()));
+        showListView(SQLite.getCreditList(ListCredit.this));
 
         Button button_add = findViewById(R.id.button_add);
 

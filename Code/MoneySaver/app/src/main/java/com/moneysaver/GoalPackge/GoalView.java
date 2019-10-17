@@ -1,6 +1,10 @@
 package com.moneysaver.GoalPackge;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -9,33 +13,40 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.moneysaver.Config;
 import com.moneysaver.CreditPackage.Credit;
+import com.moneysaver.CreditPackage.CreditView;
+import com.moneysaver.CreditPackage.ListCredit;
 import com.moneysaver.R;
+import com.moneysaver.SQLite;
+import com.moneysaver.SaveMoney;
 
 public class GoalView extends AppCompatActivity {
     private Button ok;
     private Button delete;
     private Button save;
+    private Goal goal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.credit_view);
-        final Goal goal = (Goal) getIntent().getSerializableExtra(Goal.class.getSimpleName());
+        setContentView(R.layout.item_info_view);
+        goal = (Goal) getIntent().getSerializableExtra(Goal.class.getSimpleName());
         final EditText name = findViewById(R.id.name);
         name.setText(goal.getName());
         final EditText cost = findViewById(R.id.cost);
         cost.setText(String.valueOf(goal.getCost()));
         final EditText notes = findViewById(R.id.notes);
         notes.setText(goal.getNotes());
-        TextView saved = findViewById(R.id.saved);
         String str = goal.getSaved().toString();
         final TextView savedValue = findViewById(R.id.savedValue);
         savedValue.setText(str);
 
         ok = findViewById(R.id.buttonOk);
         delete = findViewById(R.id.buttonDelete);
+        save = findViewById(R.id.buttonSave);
 
         cost.addTextChangedListener(new TextWatcher() {
 
@@ -49,9 +60,21 @@ public class GoalView extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if ((!cost.getText().toString().equals("")) && (!name.getText().toString().equals(""))) {
-                    ok.setEnabled(true);
-                } else {
+                try {
+                    if (cost.getText().toString().equals("") ||
+                            Double.parseDouble(cost.getText().toString()) - goal.getSaved() < Config.EPS) {
+                        cost.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+                        ok.setEnabled(false);
+                    } else {
+                        cost.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
+                        if (!name.getText().toString().equals("")) {
+                            ok.setEnabled(true);
+                        } else {
+                            ok.setEnabled(false);
+                        }
+                    }
+                } catch (Exception e) {
+                    cost.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
                     ok.setEnabled(false);
                 }
             }
@@ -69,10 +92,16 @@ public class GoalView extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if ((!cost.getText().toString().equals("")) && (!name.getText().toString().equals(""))) {
-                    ok.setEnabled(true);
-                } else {
+                if (name.getText().toString().equals("")) {
+                    name.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
                     ok.setEnabled(false);
+                } else {
+                    name.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
+                    if (!cost.getText().toString().equals("")) {
+                        ok.setEnabled(true);
+                    } else {
+                        ok.setEnabled(false);
+                    }
                 }
             }
         });
@@ -80,10 +109,7 @@ public class GoalView extends AppCompatActivity {
         View.OnClickListener listenerDelete = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent();
-                i.putExtra("activity", "delete");
-                setResult(1, i);
-                finish();
+                dialogWindowDelete();
             }
         };
         delete.setOnClickListener(listenerDelete);
@@ -93,26 +119,85 @@ public class GoalView extends AppCompatActivity {
             public void onClick(View v) {
                 String newName = name.getText().toString();
                 String newNotes = notes.getText().toString();
-                String newCost = cost.getText().toString();
+                double newCost = Double.parseDouble(cost.getText().toString());
+                dialogWindowSave(newName, newNotes, newCost);
 
-                if(goal.getName().equals(newName) && goal.getNotes().equals(newNotes) &&
-                        goal.getCost().toString().equals(newCost)){
-                    Intent i = new Intent();
-                    i.putExtra("activity", "ok");
-                    setResult(1, i);
-                    finish();
-                }
-                else{
-                    Intent i = new Intent();
-                    i.putExtra("activity", "edit");
-                    i.putExtra("name", newName);
-                    i.putExtra("cost", newCost);
-                    i.putExtra("notes", newNotes);
-                    setResult(1, i);
-                    finish();
-                }
             }
         };
         ok.setOnClickListener(listenerOk);
+
+        View.OnClickListener saveMoney = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GoalView.this, SaveMoney.class);
+                intent.putExtra("Goal", goal);
+                startActivity(intent);
+            }
+        };
+        save.setOnClickListener(saveMoney);
+    }
+
+
+    private void dialogWindowSave(final String name, final String notes, final double cost) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(GoalView.this);
+        builder.setTitle("Уведомление")
+                .setMessage("Сохранить изменения?")
+                .setIcon(R.drawable.ic_notifications_active_red_24dp)
+                .setCancelable(false)
+                .setPositiveButton("Не хочу",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Toast.makeText(GoalView.this, "Отмена!",
+                                        Toast.LENGTH_LONG).show();
+                                dialog.cancel();
+                            }
+                        })
+                .setNegativeButton("Подтверждаю",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                saveChanges(name, notes, cost);
+                                Toast.makeText(GoalView.this, "Сохранено!",
+                                        Toast.LENGTH_LONG).show();
+                                dialog.cancel();
+                                Intent intent = new Intent(GoalView.this, ListGoal.class);
+                                startActivity(intent);
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void dialogWindowDelete() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(GoalView.this);
+        builder.setTitle("Уведомление")
+                .setMessage("Удалить цель '" + goal.getName() + "'?")
+                .setIcon(R.drawable.ic_notifications_active_red_24dp)
+                .setCancelable(false)
+                .setPositiveButton("Не хочу",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Toast.makeText(GoalView.this, "Отмена!",
+                                        Toast.LENGTH_LONG).show();
+                                dialog.cancel();
+                            }
+                        })
+                .setNegativeButton("Подтверждаю",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                SQLite.deleteGoal(GoalView.this, goal.getId());
+                                Toast.makeText(GoalView.this, "Удалено!",
+                                        Toast.LENGTH_LONG).show();
+                                dialog.cancel();
+                                Intent intent = new Intent(GoalView.this, ListGoal.class);
+                                startActivity(intent);
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void saveChanges(String name, String notes, double cost) {
+        Goal newGoal = new Goal(name, cost, goal.getSaved(), notes);
+        SQLite.updateGoal(GoalView.this, goal.getId(), newGoal);
     }
 }

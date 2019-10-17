@@ -83,6 +83,7 @@ public class AddCategories  extends AppCompatActivity implements View.OnClickLis
                                 SaveCategories saved = new SaveCategories(getBaseContext());
                                 saved.saveCategories(categories);
                                 Intent intent = new Intent(AddCategories.this, Settings.class);
+                                intent.putExtra("balance", balance);
                                 startActivity(intent);
                                 dialog.cancel();
                             }

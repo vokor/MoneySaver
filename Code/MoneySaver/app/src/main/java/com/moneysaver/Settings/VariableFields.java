@@ -23,11 +23,12 @@ public class VariableFields {
 
     private double baseBalance;
 
-    public VariableFields(EditText eNewBal, TextView tBal, Context context) {
+    public VariableFields(EditText eNewBal, TextView tBal, double baseBalance) {
         this.editNewBalance = eNewBal;
         this.textBalanceWithCateg = tBal;
         this.isNewBalanceCorrect = true;
-        this.baseBalance = SQLite.getBalance(context);
+        this.baseBalance = baseBalance;
+        recountBalance();
         setListenerOnNewBalance();
     }
 

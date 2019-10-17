@@ -29,7 +29,7 @@ public class SQLite {
         if ((cursor != null) && (cursor.getCount() > 0)) {
             cursor.moveToFirst();
             do {
-                list.add(new Goal(cursor.getString(1),cursor.getDouble(2), cursor.getDouble(3)));
+                list.add(new Goal(cursor.getString(0),cursor.getDouble(1), cursor.getDouble(2), cursor.getString(3), cursor.getInt(4)));
             } while (cursor.moveToNext());
             cursor.close();
         }
@@ -75,7 +75,8 @@ public class SQLite {
                         cursor.getDouble(1),
                         date,
                         cursor.getString(2),
-                        notes));
+                        notes,
+                        cursor.getInt(5)));
             } while (cursor.moveToNext());
             cursor.close();
         }
@@ -122,19 +123,26 @@ public class SQLite {
 
     public static void AddExpense(Context context, Expense expense) {
         SQLiteDatabase db = getDataBase(context);
-        db.execSQL("INSERT INTO Expense (Name, Cost, Category, Data, Notes) VALUES('"
+        db.execSQL("INSERT INTO Expense (Name, Cost, Category, Data, Notes, Id) VALUES('"
                 + expense.getName()
                 + "'," + expense.getCost()
                 + ", '" + expense.getCategory()
                 + "', '" + expense.getDate()
                 + "', '" + expense.getNotes()
-                + "');");
+                + "', " + expense.getId()
+                + ");");
         db.close();
     }
 
     public static void deleteAllCategories(Context context, String name) {
         SQLiteDatabase db = getDataBase(context);
         db.execSQL("DELETE FROM "+ name + ";");
+        db.close();
+    }
+
+    public static void deleteGoal(Context context, int id) {
+        SQLiteDatabase db = getDataBase(context);
+        db.execSQL("DELETE FROM Goal WHERE Id = "+ id + ";");
         db.close();
     }
 
@@ -188,6 +196,17 @@ public class SQLite {
         db.close();
     }
 
+    public static void updateGoal(Context context, int id, Goal goal) {
+        SQLiteDatabase db = getDataBase(context);
+        db.execSQL("UPDATE Goal SET Name ='"+ goal.getName() +
+                "', AllSum = " + goal.getCost() +
+                ", Saved = " + goal.getSaved() +
+                ", Notes = '" + goal.getNotes() +
+                "', Id = " + id +
+                " WHERE Id = " + id + ";");
+        db.close();
+    }
+
     public static void addCredit(Context context, Credit credit) {
         SQLiteDatabase db = getDataBase(context);
         db.execSQL("INSERT INTO Credit (Name, AllSum, Payout, Notes) VALUES('" + credit.getName()
@@ -207,6 +226,17 @@ public class SQLite {
         db.close();
     }
 
+    public static void addGoal(Context context, Goal goal) {
+        SQLiteDatabase db = getDataBase(context);
+        db.execSQL("INSERT INTO Goal (Name, AllSum, Saved, Notes, Id) VALUES('" +
+                goal.getName() +
+                "'," + goal.getCost() +
+                ", " + goal.getSaved() +
+                ",'" + goal.getNotes() +
+                "'," + goal.getId() +");");
+        db.close();
+    }
+
     public static void initialiseDataBase(Context context) {
         SQLiteDatabase db = getDataBase(context);
         db.execSQL("CREATE TABLE IF NOT EXISTS Category ("+
@@ -223,7 +253,8 @@ public class SQLite {
                 "Name TEXT NOT NULL," +
                 "AllSum DOUBLE NOT NULL," +
                 "Saved DOUBLE NOT NULL," +
-                "Notes TEXT);");
+                "Notes TEXT," +
+                "Id INTEGER NOT NULL);");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS Credit ("+
                 "Name TEXT NOT NULL," +
@@ -236,7 +267,8 @@ public class SQLite {
                 "Cost DOUBLE NOT NULL," +
                 "Category TEXT NOT NULL," +
                 "Data TEXT NOT NULL," +
-                "Notes TEXT);");
+                "Notes TEXT," +
+                "Id INTEGER NOT NULL);");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS Balance (Balance DOUBLE);");
         tryAddBaseInfo(db);
