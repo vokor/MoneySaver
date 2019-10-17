@@ -44,6 +44,9 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
 
+        Bundle arguments = getIntent().getExtras();
+        double balance = arguments.getDouble("balance");
+
         autoCompleteTextView = findViewById(R.id.autocomplete);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, Config.baseCategories);
@@ -57,7 +60,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         // This is container with all categories (default, saved, changed, deleted)
         container = new Container(SQLite.getCategoryList(getBaseContext(), "Category"), saveCategories);
 
-        vFields = new VariableFields((EditText) findViewById(R.id.newBalance), (TextView) findViewById(R.id.balanceWithoutCategoties), getBaseContext());
+        vFields = new VariableFields((EditText) findViewById(R.id.newBalance), (TextView) findViewById(R.id.balanceWithoutCategoties), balance);
         vFields.setSum(container.getSum());
         vFields.setBalanceWithoutCategories();
 
@@ -199,5 +202,11 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                         });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Settings.this, MainActivity.class);
+        startActivity(intent);
     }
 }

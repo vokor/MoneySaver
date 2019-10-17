@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity
             intent = new Intent(MainActivity.this, ListCredit.class);
         } else if (id == R.id.nav_manage) {
             intent = new Intent(MainActivity.this, Settings.class);
+            intent.putExtra("balance", SQLite.getBalance(MainActivity.this));
         } else if (id == R.id.nav_statistics) {
             intent = new Intent(MainActivity.this, Statistics.class);
         } /*else if (id == R.id.nav_statistics) {
