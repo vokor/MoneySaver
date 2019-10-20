@@ -66,7 +66,7 @@ public class CreditView extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 try {
                     if (cost.getText().toString().equals("") ||
-                            Double.parseDouble(cost.getText().toString()) - credit.getPayout() < Config.EPS) {
+                            Double.parseDouble(cost.getText().toString()) - credit.getPayout() < 0) {
                         cost.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
                         ok.setEnabled(false);
                     } else {

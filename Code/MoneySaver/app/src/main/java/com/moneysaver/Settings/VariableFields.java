@@ -15,7 +15,7 @@ public class VariableFields {
 
     public boolean isNewBalanceCorrect;
 
-    public int sumCategories;
+    public double sumCategories;
 
     private TextView textBalanceWithCateg;
 
@@ -23,11 +23,12 @@ public class VariableFields {
 
     private double baseBalance;
 
-    public VariableFields(EditText eNewBal, TextView tBal, double baseBalance) {
+    public VariableFields(EditText eNewBal, TextView tBal, double baseBalance, double sum_Categoties) {
         this.editNewBalance = eNewBal;
         this.textBalanceWithCateg = tBal;
         this.isNewBalanceCorrect = true;
         this.baseBalance = baseBalance;
+        this.sumCategories = sum_Categoties;
         recountBalance();
         setListenerOnNewBalance();
     }

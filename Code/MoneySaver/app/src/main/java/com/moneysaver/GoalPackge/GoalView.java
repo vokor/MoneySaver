@@ -62,7 +62,7 @@ public class GoalView extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 try {
                     if (cost.getText().toString().equals("") ||
-                            Double.parseDouble(cost.getText().toString()) - goal.getSaved() < Config.EPS) {
+                            Double.parseDouble(cost.getText().toString()) - goal.getSaved() < 0) {
                         cost.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
                         ok.setEnabled(false);
                     } else {
@@ -184,6 +184,7 @@ public class GoalView extends AppCompatActivity {
                 .setNegativeButton("Подтверждаю",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+                                SQLite.updateBalance(GoalView.this, goal.getSaved(),1);
                                 SQLite.deleteGoal(GoalView.this, goal.getId());
                                 Toast.makeText(GoalView.this, "Удалено!",
                                         Toast.LENGTH_LONG).show();

@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.moneysaver.CreditPackage.Credit;
 import com.moneysaver.ExpensePackage.AddExpense;
+import com.moneysaver.ExpensePackage.DeleteExpense;
 import com.moneysaver.ExpensePackage.Expense;
 import com.moneysaver.GoalPackge.Goal;
 import com.moneysaver.Settings.Category;
@@ -147,6 +148,12 @@ public class SQLite {
         db.close();
     }
 
+    public static void deleteExpense(Context context, int id) {
+        SQLiteDatabase db = getDataBase(context);
+        db.execSQL("DELETE FROM Expense WHERE Id = "+ id + ";");
+        db.close();
+    }
+
     public static void deleteCredit(Context context, String name) {
         SQLiteDatabase db = getDataBase(context);
         db.execSQL("DELETE FROM Credit WHERE Name = '"+ name + "';");
@@ -180,6 +187,9 @@ public class SQLite {
         Cursor cursor;
         cursor = db.rawQuery("SELECT * FROM Category WHERE Title = '" +
                 expense.getCategory() + "';", null);
+        if ((cursor == null) || (cursor.getCount() == 0)) {
+            return;
+        }
         cursor.moveToFirst();
         double newSpent = cursor.getDouble(2) + expense.getCost();
         db.execSQL("UPDATE Category SET Spent ='"+ newSpent + "' WHERE Title = '" + expense.getCategory() + "';");
@@ -217,11 +227,21 @@ public class SQLite {
     }
 
     public static void saveCategories(Context context, ArrayList<Category> listToSave, String name) {
+        ArrayList<Expense> expenses = getExpenseList(context);
         SQLiteDatabase db = getDataBase(context);
         for (Category category: listToSave) {
             if (!category.deleted) {
                 db.execSQL("INSERT INTO " + name + " (Title, MaxSum, Spent) VALUES('" + category.getName()
                         + "'," + category.getMaxSum() + ", " + category.getSpent() + ");");
+            }
+        }
+        for (Category category: listToSave) {
+            if (category.deleted) {
+                for (Expense expense: expenses) {
+                    if (category.getName().equals(expense.getCategory())) {
+                        DeleteExpense.deleteExpense(context, expense);
+                    }
+                }
             }
         }
         db.close();

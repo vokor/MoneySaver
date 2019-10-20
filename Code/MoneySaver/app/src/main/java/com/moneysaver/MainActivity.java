@@ -20,6 +20,7 @@ import com.moneysaver.CreditPackage.ListCredit;
 import com.moneysaver.ExpensePackage.AddExpense;
 import com.moneysaver.ExpensePackage.ListExpense;
 import com.moneysaver.GoalPackge.ListGoal;
+import com.moneysaver.Settings.Category;
 import com.moneysaver.Settings.Settings;
 import com.moneysaver.Statistics.Statistics;
 
@@ -61,12 +62,14 @@ public class MainActivity extends AppCompatActivity
     Set values from data base
      */
     private void getInfoFromBase() {
-        SQLiteDatabase db;
-        db = SQLite.getDataBase(getBaseContext());
+        double balance = SQLite.getBalance(MainActivity.this);
+        for (Category category: SQLite.getCategoryList(MainActivity.this, "Category")) {
+            balance -= category.getSpent();
+        }
 
         TextView textView = findViewById(R.id.balance);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
-        textView.setText("Баланс: ".concat(Double.toString(SQLite.getBalance(getBaseContext()))));
+        textView.setText("Баланс: ".concat(Double.toString(balance)));
     }
 
     @Override

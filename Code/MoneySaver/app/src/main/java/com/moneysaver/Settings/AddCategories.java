@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class AddCategories  extends AppCompatActivity implements View.OnClickListener{
     private AdapterCategory adapter;
     private String[] categoryNames;
+    private double balanceIni;
     private double balance;
     private TextView balanceForCategories;
     private ArrayList<Category> categories;
@@ -37,8 +38,8 @@ public class AddCategories  extends AppCompatActivity implements View.OnClickLis
         categories = new ArrayList<>();
         for (String category: categoryNames)
             categories.add(new Category(category, 0, 0));
-        balance = arguments.getDouble("balance");
-
+        balanceIni = arguments.getDouble("balance");
+        balance = balanceIni - arguments.getDouble("sumCategories");
         showListView(vListView);
     }
 
@@ -80,10 +81,10 @@ public class AddCategories  extends AppCompatActivity implements View.OnClickLis
                             public void onClick(DialogInterface dialog, int id) {
                                 Toast.makeText(AddCategories.this, "Сохранено!",
                                         Toast.LENGTH_LONG).show();
-                                SaveCategories saved = new SaveCategories(getBaseContext());
+                                SaveCategories saved = new SaveCategories(AddCategories.this);
                                 saved.saveCategories(categories);
                                 Intent intent = new Intent(AddCategories.this, Settings.class);
-                                intent.putExtra("balance", balance);
+                                intent.putExtra("balance", balanceIni);
                                 startActivity(intent);
                                 dialog.cancel();
                             }
