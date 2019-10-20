@@ -49,7 +49,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
         autoCompleteTextView = findViewById(R.id.autocomplete);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, Config.baseCategories);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, Config.autocomplete);
         autoCompleteTextView.setAdapter(adapter);
 
         SaveCategories saveCategories = new SaveCategories(getBaseContext());

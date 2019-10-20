@@ -104,7 +104,7 @@ public class Statistics extends AppCompatActivity implements SeekBar.OnSeekBarCh
         l.setYEntrySpace(0f);
         l.setYOffset(0f);
 
-        chart.setEntryLabelColor(Color.WHITE);
+        chart.setEntryLabelColor(Color.BLACK);
         chart.setEntryLabelTextSize(12f);
 
         if (count > 5)
@@ -152,7 +152,7 @@ public class Statistics extends AppCompatActivity implements SeekBar.OnSeekBarCh
         PieData data = new PieData(dataSet);
         data.setValueFormatter(new PercentFormatter(chart));
         data.setValueTextSize(11f);
-        data.setValueTextColor(Color.BLACK);
+        data.setValueTextColor(Color.BLUE);
         chart.setData(data);
         chart.highlightValues(null);
 

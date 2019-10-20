@@ -4,7 +4,9 @@ public class Config {
 
     public static final String dbName = "moneysaver.db";
 
-    public static String[] baseCategories = {"Еда", "Транспорт","Здоровье","Развлечения", "Платежи", "Другое"};
+    public static String[] autocomplete = {"Еда","Здоровье","Развлечения"};
+
+    public static String[] defaultCategories = {"Другое"};
 
     public static String rusSymbols = "йцукенгшщзхъфывапролджэячсмитьбюёЙЦУКЕНГШЩЗФЫВАПРОЛДЖЭЪЯЧСМИТЬБЮЁ0123456789";
 

@@ -15,6 +15,7 @@ import java.util.Date;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.moneysaver.Config.dbName;
+import static com.moneysaver.Config.defaultCategories;
 
 public class SQLite {
 
@@ -271,17 +272,33 @@ public class SQLite {
                 "Id INTEGER NOT NULL);");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS Balance (Balance DOUBLE);");
-        tryAddBaseInfo(db);
+        tryAddBaseInfo(context);
     }
 
     /*
     Check if database contains default information
      */
-    private static void tryAddBaseInfo(SQLiteDatabase db) {
+    private static void tryAddBaseInfo(Context context) {
+        SQLiteDatabase db = getDataBase(context);
         Cursor cursor;
         cursor = db.rawQuery("SELECT * FROM Balance;", null);
         if (!(cursor.getCount() > 0))
-            db.execSQL("INSERT INTO Balance (Balance) VALUES(0);");
+            db.execSQL("INSERT INTO Balance (Balance) VALUES(100);");
         cursor.close();
+
+        String [] names = getCategoryNames(context, "Category");
+        ArrayList<Category> listToSave = new ArrayList<>();
+        for (String name1: defaultCategories) {
+            boolean contain = false;
+            for (String name2: names) {
+                if (name1.equals(name2)) {
+                    contain = true;
+                }
+            }
+            if (!contain) {
+                listToSave.add(new Category(name1, 100, 0));
+            }
+        }
+        saveCategories(context, listToSave, "Category");
     }
 }
