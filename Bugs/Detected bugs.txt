@@ -1,1 +1,1 @@
-1. For some phone models application work wrong. It means that it don't gives not full design, for example highlight fields
+1. For some phone models application work wrong. It means that it doesn't give full design, for example highlight fields
