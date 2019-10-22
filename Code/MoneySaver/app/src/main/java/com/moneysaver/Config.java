@@ -4,7 +4,8 @@ public class Config {
 
     public static final String dbName = "moneysaver.db";
 
-    public static String[] autocomplete = {"Еда","Здоровье","Развлечения"};
+    public static String[] autocomplete = {"Еда","Здоровье","Развлечения", "Автомобиль","Дом", "Одежда", "Косметика", "Ремонт", "Мебель",
+            "Дети", "Хобби", "Кафе", "Сладости", "Техника", "Интернет", "Праздники", "Транспорт"};
 
     public static String[] defaultCategories = {"Другое"};
 

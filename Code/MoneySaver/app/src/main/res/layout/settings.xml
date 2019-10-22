@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:textColorHighlight="@color/colorBlueDark"
             android:ems="10"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:maxLength="6" />
 
         <TextView
