@@ -38,9 +38,11 @@ public class AdapterExpense extends BaseAdapter {
         View view = inflater.inflate(R.layout.list_item_expense, parent, false);
         TextView vName = view.findViewById(R.id.item_name);
         TextView vCost = view.findViewById(R.id.item_cost);
+        TextView vDate = view.findViewById(R.id.item_date);
         Expense item = (Expense)getItem(position);
         vName.setText(item.getName());
         vCost.setText(Double.toString(item.getCost()));
+        vDate.setText(item.getDate());
         return view;
     }
 

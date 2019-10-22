@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.moneysaver.GoalPackge.DeleteGoal;
 import com.moneysaver.MainActivity;
 import com.moneysaver.R;
 import com.moneysaver.SQLite;
