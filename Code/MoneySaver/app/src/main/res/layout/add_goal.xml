@@ -22,6 +22,9 @@
             android:id="@+id/nameGoalView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/colorBlueDark"
+            android:textStyle="bold"
             android:text="Название" />
 
         <EditText
@@ -35,6 +38,9 @@
             android:id="@+id/costGoalView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/colorBlueDark"
+            android:textStyle="bold"
             android:text="Нужная сумма" />
 
         <EditText
@@ -48,6 +54,9 @@
             android:id="@+id/notesGoalView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/colorBlueDark"
+            android:textStyle="bold"
             android:text="Заметки" />
 
         <EditText
