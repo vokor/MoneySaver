@@ -50,9 +50,9 @@ public class SaveMoney extends AppCompatActivity {
         double sum = className.equals("Credit") ? credit.getAllSum() : goal.getCost();
         double payout = className.equals("Credit") ? credit.getPayout() : goal.getSaved();
 
-        return balance - moneyForSave >= Config.EPS &&
-                sum - payout - moneyForSave >= Config.EPS &&
-                balance >= Config.EPS;
+        return balance - moneyForSave >= 0 &&
+                sum - payout - moneyForSave >= 0 &&
+                balance >= 0;
     }
 
     private void startButtonListener() {

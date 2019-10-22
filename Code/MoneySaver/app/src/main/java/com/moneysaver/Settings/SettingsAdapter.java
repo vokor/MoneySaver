@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.moneysaver.Config;
 import com.moneysaver.R;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ class SettingsAdapter extends ArrayAdapter<Category> {
     }
 
     @Override
-    public synchronized View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         final ViewHolder viewHolder;
         convertView = inflater.inflate(R.layout.list_categories, parent, false);
@@ -71,6 +72,9 @@ class SettingsAdapter extends ArrayAdapter<Category> {
         viewHolder.delete.b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (isDefault(container.getCommonCategories().get(position))) {
+                    return;
+                }
                 container.getCommonCategories().get(position).deleted = !container.getCommonCategories().get(position).deleted;
                 viewHolder.setActualDelete();
                 vFields.setSum(container.getSum());
@@ -115,6 +119,7 @@ class SettingsAdapter extends ArrayAdapter<Category> {
 
         public void setActualDelete() {
             Category category = container.getCommonCategories().get(position);
+
             if (!category.deleted) {
                 delete.b.setText("Удалить");
                 change.b.setEnabled(true);
@@ -193,5 +198,14 @@ class SettingsAdapter extends ArrayAdapter<Category> {
         }catch(NumberFormatException e){
             return -2;
         }
+    }
+
+    private boolean isDefault(Category category) {
+        for (String name: Config.defaultCategories) {
+            if (name.equals(category.getName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -49,7 +49,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
         autoCompleteTextView = findViewById(R.id.autocomplete);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, Config.baseCategories);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, Config.autocomplete);
         autoCompleteTextView.setAdapter(adapter);
 
         SaveCategories saveCategories = new SaveCategories(getBaseContext());
@@ -60,8 +60,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         // This is container with all categories (default, saved, changed, deleted)
         container = new Container(SQLite.getCategoryList(getBaseContext(), "Category"), saveCategories);
 
-        vFields = new VariableFields((EditText) findViewById(R.id.newBalance), (TextView) findViewById(R.id.balanceWithoutCategoties), balance);
-        vFields.setSum(container.getSum());
+        vFields = new VariableFields((EditText) findViewById(R.id.newBalance), (TextView) findViewById(R.id.balanceWithoutCategoties), balance, container.getSum());
         vFields.setBalanceWithoutCategories();
 
         categoryList = findViewById(R.id.categoryList);
@@ -108,7 +107,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 Intent intent = new Intent(Settings.this, AddCategories.class);
 
                 intent.putExtra("array", splitData);
-                intent.putExtra("balance", vFields.getUserBalance() - vFields.sumCategories);
+                intent.putExtra("balance", vFields.getUserBalance());
+                intent.putExtra("sumCategories", vFields.sumCategories);
                 startActivity(intent);
                 break;
             case R.id.saveChanges:

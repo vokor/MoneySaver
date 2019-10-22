@@ -34,8 +34,8 @@ public class ListGoal extends AppCompatActivity {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(ListGoal.this, AddGoal.class);
-                startActivityForResult(i, 2);
+                Intent intent = new Intent(ListGoal.this, AddGoal.class);
+                startActivity(intent);
             }
         };
         button_add.setOnClickListener(listener);

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Spinner;
 
 import com.moneysaver.ExpensePackage.Expense;
+import com.moneysaver.MainActivity;
 import com.moneysaver.R;
 
 public class ExpenseView extends AppCompatActivity {
@@ -21,7 +22,7 @@ public class ExpenseView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.expense_view);
-        Expense expense = (Expense) getIntent().getSerializableExtra(Expense.class.getSimpleName());
+        final Expense expense = (Expense) getIntent().getSerializableExtra(Expense.class.getSimpleName());
         TextView name = findViewById(R.id.name);
         name.setText(expense.getName());
         TextView cost = findViewById(R.id.cost);
@@ -43,10 +44,9 @@ public class ExpenseView extends AppCompatActivity {
         View.OnClickListener listenerDelete = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent();
-                i.putExtra("activity", "delete");
-                setResult(1, i);
-                finish();
+                Intent intent = new Intent(ExpenseView.this, DeleteExpense.class);
+                intent.putExtra(Expense.class.getSimpleName(), expense);
+                startActivity(intent);
             }
         };
         delete.setOnClickListener(listenerDelete);
@@ -54,12 +54,16 @@ public class ExpenseView extends AppCompatActivity {
         View.OnClickListener listenerOk = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent();
-                i.putExtra("activity", "ok");
-                setResult(1, i);
-                finish();
+                Intent intent = new Intent(ExpenseView.this, MainActivity.class);
+                startActivity(intent);
             }
         };
         ok.setOnClickListener(listenerOk);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ExpenseView.this, ListExpense.class);
+        startActivity(intent);
     }
 }
